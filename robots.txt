@@ -1,0 +1,33 @@
+# Mizu Move — robots.txt
+# Replace www.mizumove.example with your real domain once deployed.
+
+User-agent: *
+Allow: /
+
+# Classic search crawlers are allowed above by default (Allow: /).
+# AI / answer-engine crawlers are listed explicitly and ALLOWED on purpose —
+# being crawlable by these is what gets Mizu Move cited in ChatGPT, Perplexity,
+# Google AI Overviews, etc. Change any of these to "Disallow: /" if you decide
+# you don't want a specific one training on or citing your content.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.mizumove.example/sitemap.xml

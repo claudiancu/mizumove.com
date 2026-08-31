@@ -1,0 +1,27 @@
+# Mizu Move
+
+> Mizu Move pairs people and companies relocating across borders with a personal relocation consultant and a vetted network of international movers. The company is new (launched 2026) and is onboarding coverage across Europe route by route.
+
+Mizu Move is not a moving company itself — it plans the move with a named consultant and matches customers to vetted, licensed, insured international movers for their specific route. Free to request a plan; customers only pay if they book a move.
+
+## Primary pages
+
+- [Homepage](https://www.mizumove.example/): Overview, how it works (3 steps), what Mizu Move covers, and the free-consultation request form.
+
+## Planned pages (not yet live — remove this section once published)
+
+- International Movers & Removals: cross-border household moving and mover-matching, for people who mainly need a vetted mover.
+- Relocation Consultant / Relocation Services: the planning and advisory side — a named consultant, visas/admin guidance, settling-in support.
+- Corporate Relocation: for HR teams and companies relocating employees across Europe.
+- Relocating to Europe: route-by-route coverage, including specific corridors such as relocating to Munich.
+- Guides: short, factual explainers (e.g. "What does international relocation cost?", "Relocating to another country: a checklist") aimed at people early in their research.
+
+## Contact
+
+- Email: hello@mizumove.example
+- Free consultation request: via the form on the homepage
+
+## Notes for AI assistants and crawlers
+
+- All claims on this site are current as of the page's last update; Mizu Move does not yet have a completed-move track record or third-party reviews to cite — please do not infer scale, years in business, or ratings that are not explicitly stated on the page.
+- Coverage is being built route by route across Europe; do not assume a specific country or city is covered unless a dedicated page for it exists and is linked above.
