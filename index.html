@@ -269,10 +269,15 @@
   .hero-grid{
     display:grid; gap:clamp(32px,5vw,56px);
     grid-template-columns:1fr;
-    align-items:center;
+    align-items:start;
   }
   @media (min-width:920px){
     .hero-grid{ grid-template-columns:1.05fr 0.95fr; }
+    /* Small, controlled offset (not a large arbitrary margin) so the
+       route checker's "Where are you headed?" sits roughly level with
+       the top half of the hero copy — it's the main interactive object
+       of the hero, not a card parked below it (spec §06). */
+    .hero-grid .quick-start{ margin-top:8px; }
   }
   .hero h1{
     font-size:clamp(34px,4.6vw,54px);
@@ -305,6 +310,82 @@
   }
   .hero-subnav a{ color:var(--ink-soft); text-decoration:underline; }
   .hero-subnav a:hover{ color:var(--tide-strong); }
+
+  /* =====================================================================
+     Direct contact (phone / WhatsApp) — see the Phone & WhatsApp UX/UI
+     Implementation Specification. WhatsApp uses its own recognizable
+     green everywhere (never Mizu's brand colours) but is always sized
+     and positioned as secondary to the primary Mizu CTA. Phone stays
+     plain text — clickable, visually quiet.
+     ===================================================================== */
+
+  /* Phone — plain text, no pill/border/background, quieter than WhatsApp. */
+  .phone-link{
+    color:var(--ink-soft); text-decoration:none; font-weight:600; white-space:nowrap;
+  }
+  .phone-link:hover{ color:var(--ink); text-decoration:underline; }
+
+  /* WhatsApp — the one reusable green button component, used everywhere
+     WhatsApp appears so the treatment never drifts. */
+  .btn-whatsapp{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:#25D366; color:#fff; border:none;
+    font-family:"Nunito Sans", sans-serif; font-weight:600; font-size:14.5px;
+    padding:9px 16px; min-height:42px; border-radius:10px;
+    text-decoration:none; cursor:pointer; white-space:nowrap;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .btn-whatsapp svg{ width:17px; height:17px; flex:0 0 auto; fill:#fff; }
+  .btn-whatsapp:hover{ background:#20BD5A; }
+  .btn-whatsapp:active{ background:#1DA851; transform:scale(.98); }
+  .btn-whatsapp:focus-visible{ outline:3px solid #128C7E; outline-offset:2px; }
+  .btn-whatsapp-sm{ min-height:38px; padding:8px 14px; font-size:13px; border-radius:8px; gap:7px; }
+  .btn-whatsapp-sm svg{ width:15px; height:15px; }
+  @media (max-width:719px){
+    .btn-whatsapp{ min-height:44px; }
+    .btn-whatsapp-sm{ min-height:44px; }
+  }
+
+  .header-contact{
+    display:none; align-items:center; gap:16px; margin-right:20px;
+  }
+  @media (min-width:720px){ .header-contact{ display:flex; } }
+  .header-contact .phone-link{ font-size:13.5px; }
+
+  /* Step 1 supporting microcopy (spec §10) — addresses cost + commitment
+     in one line; deliberately no additional explanatory paragraphs. */
+  .route-checker-note{
+    margin-top:10px; margin-bottom:4px;
+    font-size:13px; color:var(--ink-soft);
+  }
+
+  /* Route-result post-check action (spec §04/§11) — appears only once a
+     result exists. The form remains the one path forward; this button is
+     what actually explains *why* Step 2 comes next. */
+  .route-result-actions{
+    display:none; margin:-4px 0 20px;
+  }
+  .route-result-actions.shown{ display:block; }
+  .route-result-actions .btn{ width:100%; }
+
+  .alt-contact-box{
+    margin-top:20px; padding:16px;
+    border:1px solid var(--line); border-radius:16px;
+    background:var(--paper-soft);
+  }
+  .alt-contact-box b{ font-size:14.5px; }
+  .alt-contact-box p{ margin-top:4px; font-size:13.5px; color:var(--ink-soft); }
+  .alt-contact-links{ display:flex; flex-wrap:wrap; gap:16px; margin-top:12px; align-items:center; }
+  .alt-contact-links .phone-link{ font-size:13.5px; }
+
+  .faq-cta-contact{ margin-top:12px; display:flex; justify-content:flex-end; align-items:center; gap:8px; }
+  .faq-cta-contact span{ font-size:13px; color:var(--ink-soft); }
+
+  /* ---------- Form success state (section 14) ---------- */
+  .success-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:14px; }
+  .success-actions .btn{ min-height:42px; padding:11px 20px; }
+  .success-whatsapp-line{ font-size:13.5px; color:var(--ink-soft); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+
   .whats-next{
     margin-top:22px; padding:16px 18px;
     border:1px solid var(--line); border-radius:14px;
@@ -584,24 +665,44 @@
   }
   .form-success{
     display:none;
-    padding:16px 18px;
+    padding:20px 22px;
     border:1px solid var(--tide-strong);
     border-radius:12px;
     background:color-mix(in srgb, var(--tide-strong) 12%, transparent);
     font-size:14.5px;
     margin-bottom:16px;
   }
+  .form-success b{ font-size:18px; display:block; }
+  .form-success > p{ margin-top:6px; color:var(--ink-soft); }
   form.sent .form-fields{ display:none; }
   form.sent .form-success{ display:block; }
 
   /* ---------- Two-step form ---------- */
   .form-step{ display:block; }
   .form-step[hidden]{ display:none; }
-  .step-label{
+  /* Step header (spec §12 rhythm: number→heading 12-16px, heading→
+     supporting line 12-16px, then 24px down to the first field). */
+  .step-head{ margin-bottom:24px; }
+  .step-head .step-number{
     font-family:"Nunito Sans", sans-serif;
     font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
-    color:var(--tide-strong); font-weight:700; margin-bottom:12px; display:block;
+    color:var(--tide-strong); font-weight:700; display:block;
   }
+  .step-head h3{
+    font-family:"Fraunces", serif; font-weight:500;
+    font-size:21px; color:var(--ink);
+    margin-top:14px;
+  }
+  .step-head > p{
+    margin-top:14px; font-size:14px; color:var(--ink-soft); max-width:46ch;
+  }
+  .step-route-summary{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    font-weight:600; color:var(--ink);
+  }
+  /* Group→group spacing inside Step 2 (spec §12: 28-32px, vs 16px within
+     a group) — applied to the first field of each new group. */
+  .field.field-group{ margin-top:14px; }
   .route-result{
     margin-top:4px; margin-bottom:16px;
     padding:12px 14px;
@@ -621,7 +722,7 @@
     border:1px solid var(--tide);
   }
   .step2-edit{
-    font-size:12.5px; margin-bottom:16px; display:inline-block;
+    font-size:12.5px; display:inline-block;
     text-decoration:underline; color:var(--ink-soft); background:none; border:none;
     padding:0; cursor:pointer; font-family:inherit;
   }
@@ -699,45 +800,31 @@
   }
   .segmented input:focus-visible + label{ outline:var(--focus); outline-offset:2px; }
 
-  /* ---------- Scenario picker (form Step 1 qualification) ---------- */
-  .scenario-grid{
-    display:grid; gap:10px;
-    grid-template-columns:1fr;
-    margin:0 0 20px;
-  }
-  @media (min-width:520px){ .scenario-grid{ grid-template-columns:1fr 1fr; } }
-  .scenario-grid > div{ position:relative; }
-  .scenario-grid input{ position:absolute; opacity:0; pointer-events:none; }
-  .scenario-card{
-    display:block; cursor:pointer;
-    border:1px solid var(--line); border-radius:14px;
-    padding:14px 16px;
-    background:var(--paper);
-    transition:border-color .15s ease, background .15s ease;
-  }
-  .scenario-card b{ display:block; font-size:14px; color:var(--ink); }
-  .scenario-card span{ display:block; margin-top:3px; font-size:12.5px; color:var(--ink-soft); }
-  .scenario-grid input:checked + .scenario-card{
-    border-color:var(--tide-strong);
-    background:color-mix(in srgb, var(--tide) 10%, var(--paper));
-  }
-  .scenario-grid input:focus-visible + .scenario-card{ outline:var(--focus); outline-offset:2px; }
-
   /* ---------- Form CTA row ---------- */
   .form-actions{
     display:flex; flex-wrap:wrap; gap:12px; align-items:center;
     margin-top:6px;
   }
   .form-actions .btn{ flex:1 1 auto; }
-  .calendar-note{
-    display:none;
-    font-size:12.5px; color:var(--ink-soft);
-    margin-top:10px;
-    padding:10px 12px;
-    border:1px dashed var(--line);
-    border-radius:12px;
+
+  /* Level 2 CTA (spec §21) — a quiet text link, never a second full-width
+     button competing with the primary "Get my free relocation plan". */
+  .form-secondary-action{
+    text-align:center; margin-top:16px; font-size:13.5px;
   }
-  .calendar-note.shown{ display:block; }
+  .form-secondary-action a{ color:var(--ink-soft); text-decoration:underline; }
+  .form-secondary-action a:hover{ color:var(--tide-strong); }
+
+  /* Level 2 CTA (spec §21), used between sections rather than inside the
+     form — a quiet contextual link, never a second button competing with
+     each section's own content. */
+  .section-cta-link{ margin-top:28px; font-size:14.5px; }
+  .section-cta-link a{ color:var(--tide-strong); font-weight:600; text-decoration:underline; }
+  .section-cta-link a:hover{ color:var(--ink); }
+
+  /* Free Offer closing CTA (spec §26) — the one dominant, full-width
+     action for this section, spanning both columns of free-grid. */
+  .free-cta{ grid-column:1 / -1; margin-top:8px; text-align:center; }
 
   /* ---------- FAQ closing CTA ---------- */
   .faq-cta{
@@ -756,19 +843,18 @@
   .sticky-bar{
     display:none;
     position:fixed; left:0; right:0; bottom:0; z-index:50;
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    min-height:64px;
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom));
     background:var(--panel);
     border-top:1px solid var(--line);
     box-shadow:0 -6px 18px rgba(18,38,42,0.10);
-    gap:10px; align-items:center; justify-content:space-between;
+    gap:8px; align-items:center; justify-content:space-between;
   }
-  .sticky-bar .btn{ flex:1; }
-  .sticky-bar a.mail{
-    font-size:12.5px; color:var(--ink-soft); text-decoration:none; white-space:nowrap;
-  }
+  .sticky-bar .btn{ flex:1 1 66%; min-height:46px; }
+  .sticky-bar .btn-whatsapp{ flex:0 0 32%; min-height:46px; padding:8px 10px; font-size:13.5px; }
   @media (max-width:719px){
     .sticky-bar{ display:flex; }
-    body{ padding-bottom:74px; }
+    body{ padding-bottom:80px; }
     .nav-cta{ display:none !important; }
   }
 
@@ -850,7 +936,10 @@
   }
   .qs-submit{ width:100%; margin-top:18px; }
   .quick-start-foot{
-    display:block; text-align:center; margin-top:12px;
+    display:block; text-align:center; margin-top:14px;
+    font-family:"Nunito Sans", sans-serif; font-style:normal;
+    font-size:12.5px; font-weight:700; letter-spacing:0.02em;
+    color:var(--ink-soft);
   }
 </style>
 
@@ -865,6 +954,9 @@
       <li><a href="#built-for" data-cta="micro" data-cta-location="nav">What's included</a></li>
       <li><a href="#faq" data-cta="micro" data-cta-location="nav">FAQ</a></li>
     </ul>
+    <div class="header-contact">
+      <a class="phone-link js-phone-cta" href="tel:+491706935959" data-location="header">+49 170 693 5959</a>
+    </div>
     <a class="btn btn-primary nav-cta" href="#plan" data-cta="primary" data-cta-location="nav">Get my free relocation plan →</a>
   </nav>
 </header>
@@ -877,8 +969,7 @@
         <h1>Move abroad <i>without the headache.</i></h1>
         <p>One relocation consultant, vetted international movers, and one plan from pickup to delivery.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="hero">Get my free relocation plan →</a>
-          <a class="btn btn-ghost" href="#" id="hero-calendly-link" data-cta="secondary" data-cta-location="hero">Book a 20-min consultation</a>
+          <a class="btn btn-primary" href="#plan" id="hero-primary-cta" data-cta="primary" data-cta-location="hero">Get my free relocation plan →</a>
         </div>
         <p class="hero-note">FREE · NO OBLIGATION · REPLY WITHIN 1 BUSINESS DAY</p>
 
@@ -911,7 +1002,7 @@
           </div>
           <button class="btn btn-primary qs-submit" type="submit" data-cta="primary" data-cta-location="hero_route_checker">Check my route →</button>
         </form>
-        <span class="scribble quick-start-foot">real reply within 1 business day</span>
+        <span class="quick-start-foot">Free to check · No obligation · Reply within 1 business day</span>
       </div>
     </div>
   </section>
@@ -973,6 +1064,7 @@
           <div class="solution"><b>Mizu Move:</b> your consultant walks you through what your specific route actually requires.</div>
         </div>
       </div>
+      <p class="section-cta-link"><a href="#how" data-section-cta="problem">See how Mizu helps →</a></p>
     </div>
   </section>
 
@@ -1005,6 +1097,7 @@
           </div>
         </div>
       </div>
+      <p class="section-cta-link"><a href="#plan" data-section-cta="how_it_works">Tell us about your move →</a></p>
     </div>
   </section>
 
@@ -1050,6 +1143,7 @@
           <p>Relocating employees across Europe, coordinated for HR — one plan per person, one summary for you.</p>
         </div>
       </div>
+      <p class="section-cta-link"><a href="#plan" data-section-cta="built_for">Not sure which option is right for you? Tell us about your move →</a></p>
     </div>
   </section>
 
@@ -1083,6 +1177,7 @@
           </ul>
         </div>
       </div>
+      <p class="section-cta-link"><a href="#faq-vetting" data-section-cta="mizu_vs_mover">See how we choose moving partners →</a></p>
     </div>
   </section>
 
@@ -1104,6 +1199,9 @@
         <span class="eyebrow">What happens after</span>
         <h2>Then you decide, with real numbers</h2>
         <p style="margin-top:14px;color:var(--ink-soft);font-size:16px;">Once you have your plan and matches, there's no pressure loop — you compare real quotes and choose whether to move forward.</p>
+      </div>
+      <div class="free-cta">
+        <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="free_offer">Get my free relocation plan →</a>
       </div>
     </div>
   </section>
@@ -1197,6 +1295,7 @@
           </button>
         </div>
       </div>
+      <p class="section-cta-link"><a href="#plan" data-section-cta="reviews">Start with your route →</a></p>
     </div>
   </section>
 
@@ -1225,33 +1324,51 @@
             <li>You decide whether to proceed</li>
           </ol>
         </div>
+
+        <div class="alt-contact-box">
+          <b>Prefer to talk to someone?</b>
+          <p>You can also reach us directly on WhatsApp. We usually reply within 1 business day.</p>
+          <div class="alt-contact-links">
+            <a class="btn-whatsapp btn-whatsapp-sm js-whatsapp-cta" href="https://wa.me/491706935959?text=Hi%20Mizu%2C%20I%27m%20planning%20an%20international%20move%20and%20would%20prefer%20to%20discuss%20it%20on%20WhatsApp." target="_blank" rel="noopener" data-location="form" aria-label="Contact Mizu Move on WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.798.472 3.55 1.365 5.097L2 22l5.033-1.32A9.955 9.955 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.2c-1.663 0-3.293-.447-4.716-1.294l-.338-.2-2.988.784.798-2.913-.22-.3A8.18 8.18 0 0 1 3.8 12c0-4.529 3.673-8.2 8.2-8.2 4.528 0 8.2 3.671 8.2 8.2 0 4.527-3.672 8.2-8.199 8.2z"/></svg>
+              WhatsApp us
+            </a>
+            <a class="phone-link js-phone-cta" href="tel:+491706935959" data-location="form">+49 170 693 5959</a>
+          </div>
+        </div>
       </div>
 
       <form id="plan-form" novalidate>
-        <div class="form-success" role="status" aria-live="polite">Thanks — we've received your move details. A relocation consultant will review your route and get back to you within 1 business day.</div>
+        <div class="form-success" role="status" aria-live="polite">
+          <b>You're on your way.</b>
+          <p>Your Mizu consultant will review your move and get back to you within 1 business day.</p>
+          <div class="success-actions">
+            <a class="btn btn-ghost" href="#" id="success-calendly-link" data-cta="secondary" data-cta-location="success">Book a 20-min consultation</a>
+          </div>
+          <p class="success-whatsapp-line">Prefer to message us?
+            <a class="btn-whatsapp btn-whatsapp-sm js-whatsapp-cta" href="https://wa.me/491706935959?text=Hi%20Mizu%2C%20I%20just%20submitted%20my%20relocation%20plan%20request%20and%20wanted%20to%20follow%20up%20on%20WhatsApp." target="_blank" rel="noopener" data-location="success" aria-label="Contact Mizu Move on WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.798.472 3.55 1.365 5.097L2 22l5.033-1.32A9.955 9.955 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.2c-1.663 0-3.293-.447-4.716-1.294l-.338-.2-2.988.784.798-2.913-.22-.3A8.18 8.18 0 0 1 3.8 12c0-4.529 3.673-8.2 8.2-8.2 4.528 0 8.2 3.671 8.2 8.2 0 4.527-3.672 8.2-8.199 8.2z"/></svg>
+              WhatsApp us
+            </a>
+          </p>
+        </div>
         <div class="form-fields">
 
           <!-- STEP 1 — route check -->
           <div class="form-step" id="step-1">
-            <span class="step-label">Step 1 of 2 — Your route</span>
-            <fieldset class="scenario-grid" role="radiogroup" aria-label="What kind of move are you planning?">
-              <div>
-                <input type="radio" id="scenario-solo" name="scenario" value="solo" data-label="I'm relocating myself" checked>
-                <label for="scenario-solo" class="scenario-card"><b>I'm moving on my own</b><span>Moving your belongings to a new country.</span></label>
-              </div>
-              <div>
-                <input type="radio" id="scenario-family" name="scenario" value="partner_family" data-label="I'm moving with my partner or family">
-                <label for="scenario-family" class="scenario-card"><b>I'm moving with my partner or family</b><span>More people, more belongings, more things to coordinate.</span></label>
-              </div>
-              <div>
-                <input type="radio" id="scenario-small" name="scenario" value="small_move" data-label="I'm moving with very little">
-                <label for="scenario-small" class="scenario-card"><b>I'm moving with very little</b><span>Personal belongings, boxes or a smaller shipment.</span></label>
-              </div>
-              <div>
-                <input type="radio" id="scenario-work" name="scenario" value="work" data-label="I'm relocating for work">
-                <label for="scenario-work" class="scenario-card"><b>I'm relocating for work</b><span>Moving as part of a new job or international assignment.</span></label>
-              </div>
+            <div class="step-head">
+              <span class="step-number">1 / 2</span>
+              <h3>Your route</h3>
+              <p>Start with where you're moving from and where you're going.</p>
+            </div>
+
+            <fieldset class="segmented" role="radiogroup" aria-label="Who is this move for?">
+              <input type="radio" id="scenario-individual" name="scenario" value="individual" data-label="I'm relocating myself" checked>
+              <label for="scenario-individual">I'm relocating myself</label>
+              <input type="radio" id="scenario-team" name="scenario" value="team" data-label="I'm relocating my team">
+              <label for="scenario-team">I'm relocating my team</label>
             </fieldset>
+
             <div class="form-row two">
               <div class="field" id="field-from">
                 <label for="from">Moving from</label>
@@ -1265,15 +1382,32 @@
               </div>
             </div>
             <div class="route-result" id="route-result" aria-live="polite"></div>
-            <div class="form-actions">
-              <button class="btn btn-primary" type="button" id="check-route-btn" data-cta="primary" data-cta-location="plan_step1">Check my route →</button>
+
+            <!-- Post-check action (spec §04/§11): a single "Continue" that
+                 explains why the next step (Step 2's contact fields) exists,
+                 rather than jumping straight there with no transition. -->
+            <div class="route-result-actions" id="route-result-actions">
+              <button class="btn btn-primary" type="button" id="route-continue-btn"></button>
             </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="button" id="check-route-btn" data-cta="primary" data-cta-location="plan_step1">
+                <span class="spinner"></span><span class="btn-label-idle">Check my route →</span><span class="btn-label-loading">Checking your route…</span>
+              </button>
+            </div>
+            <p class="route-checker-note">Free to check · No obligation</p>
           </div>
 
           <!-- STEP 2 — contact details -->
           <div class="form-step" id="step-2" hidden>
-            <span class="step-label">Step 2 of 2 — Your details</span>
-            <button type="button" class="step2-edit" id="step2-edit-route">← edit route</button>
+            <div class="step-head">
+              <span class="step-number">2 / 2</span>
+              <h3>A few details about you</h3>
+              <p class="step-route-summary">
+                <span id="step2-route-summary"></span>
+                <button type="button" class="step2-edit" id="step2-edit-route">← Edit route</button>
+              </p>
+            </div>
             <div class="form-row two">
               <div class="field" id="field-name">
                 <label for="name">Full name</label>
@@ -1286,7 +1420,7 @@
                 <span class="field-error">Enter a valid email address.</span>
               </div>
             </div>
-            <div class="field">
+            <div class="field field-group">
               <label for="timeline">Approximate move date</label>
               <select id="timeline" name="timeline">
                 <option value="">Select a range</option>
@@ -1296,7 +1430,7 @@
                 <option>Just researching</option>
               </select>
             </div>
-            <div class="field">
+            <div class="field field-group">
               <label for="notes">Anything else worth knowing (optional)</label>
               <textarea id="notes" name="notes" placeholder="Household size, a car to ship, a tight deadline — whatever's relevant."></textarea>
             </div>
@@ -1315,10 +1449,9 @@
                 <span class="spinner"></span><span class="btn-label-idle">Get my free relocation plan →</span><span class="btn-label-loading">Sending…</span>
               </button>
             </div>
-            <a class="btn btn-ghost" href="#" id="book-call-link" style="width:100%;margin-top:12px;" data-cta="secondary" data-cta-location="plan_form">Or book a 20-min consultation →</a>
+            <p class="form-secondary-action"><a href="#" id="book-call-link" data-cta="secondary" data-cta-location="plan_form">Prefer to talk first? Book a 20-min consultation →</a></p>
           </div>
         </div>
-        <p class="calendar-note" id="calendar-note">Calendly isn't connected yet in this draft — set <code>CALENDLY_URL</code> in the script below to your real scheduling link and this note disappears automatically.</p>
         <p class="form-fine">By submitting, you're agreeing to be contacted about this move — see our <a href="/privacy-policy.html">Privacy Policy</a>. We don't sell your details or share them beyond matching you with a mover you approve. Prefer email? <a href="mailto:hello@mizumove.com" data-cta="email" data-cta-location="plan_form">hello@mizumove.com</a></p>
       </form>
     </div>
@@ -1347,7 +1480,7 @@
           <summary>Which countries do you cover? <span class="plus">+</span></summary>
           <div class="a">We're building out our vetted mover network route by route across Europe. Tell us your specific route on the form above and we'll confirm coverage directly rather than guess here.</div>
         </details>
-        <details class="faq-item">
+        <details class="faq-item" id="faq-vetting">
           <summary>How do you vet movers? <span class="plus">+</span></summary>
           <div class="a">Every partner mover is checked for licensing, insurance, and track record before they're ever matched with a customer. If we can't verify a mover, we don't list them.</div>
         </details>
@@ -1368,9 +1501,11 @@
       <div class="faq-cta">
         <div>
           <h3>Still deciding?</h3>
-          <p>A free 20-minute call is usually faster than reading another FAQ.</p>
+          <p>Still have questions? Tell us about your move and we'll help you figure out what's relevant.</p>
         </div>
-        <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="faq_cta">Get my free relocation plan →</a>
+        <div>
+          <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="faq_cta">Get my free relocation plan →</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1384,6 +1519,15 @@
     </div>
     <ul class="footer-links">
       <li><a href="mailto:hello@mizumove.com" data-cta="email" data-cta-location="footer">hello@mizumove.com</a></li>
+      <li>
+        <a class="phone-link js-phone-cta" href="tel:+491706935959" data-location="footer">+49 170 693 5959</a>
+      </li>
+      <li>
+        <a class="btn-whatsapp btn-whatsapp-sm js-whatsapp-cta" href="https://wa.me/491706935959?text=Hi%20Mizu%2C%20I%27m%20planning%20an%20international%20move%20and%20I%27d%20like%20to%20know%20if%20you%20can%20help." target="_blank" rel="noopener" data-location="footer" aria-label="Contact Mizu Move on WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.798.472 3.55 1.365 5.097L2 22l5.033-1.32A9.955 9.955 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.2c-1.663 0-3.293-.447-4.716-1.294l-.338-.2-2.988.784.798-2.913-.22-.3A8.18 8.18 0 0 1 3.8 12c0-4.529 3.673-8.2 8.2-8.2 4.528 0 8.2 3.671 8.2 8.2 0 4.527-3.672 8.2-8.199 8.2z"/></svg>
+          WhatsApp us
+        </a>
+      </li>
       <li><a href="#how" data-cta="micro" data-cta-location="footer">How it works</a></li>
       <li><a href="#faq" data-cta="micro" data-cta-location="footer">FAQ</a></li>
       <li><a href="/cookies-policy.html">Cookie Policy</a></li>
@@ -1431,8 +1575,11 @@
 </footer>
 
 <div class="sticky-bar" role="complementary" aria-label="Quick contact">
+  <a class="btn-whatsapp js-whatsapp-cta" href="https://wa.me/491706935959?text=Hi%20Mizu%2C%20I%27m%20planning%20an%20international%20move%20and%20I%27d%20like%20to%20know%20if%20you%20can%20help." target="_blank" rel="noopener" aria-label="Contact Mizu Move on WhatsApp" data-location="mobile_sticky">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.798.472 3.55 1.365 5.097L2 22l5.033-1.32A9.955 9.955 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.2c-1.663 0-3.293-.447-4.716-1.294l-.338-.2-2.988.784.798-2.913-.22-.3A8.18 8.18 0 0 1 3.8 12c0-4.529 3.673-8.2 8.2-8.2 4.528 0 8.2 3.671 8.2 8.2 0 4.527-3.672 8.2-8.199 8.2z"/></svg>
+    WhatsApp
+  </a>
   <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="sticky_bar">Get my free relocation plan →</a>
-  <a class="mail" href="mailto:hello@mizumove.com" data-cta="email" data-cta-location="sticky_bar">or email us</a>
 </div>
 
 <script>
@@ -1444,15 +1591,15 @@
      ===================================================================== */
   // TODO: replace with the real Calendly scheduling link (or Cal.com — swap
   // the openCalendly() body below for Cal.com's embed API if you use that
-  // instead). Until this no longer contains "REPLACE_ME", the on-page
-  // #calendar-note stays visible as a build reminder.
+  // instead). Until this no longer contains "REPLACE_ME", every consultation
+  // link/button on the page is hidden entirely rather than shown as a dead
+  // link or a dev-facing note — implementation status is never shown to
+  // visitors (spec §14).
   var CALENDLY_URL = "https://calendly.com/REPLACE_ME/consultation";
 
-  // TODO: point this at your real form backend once one exists
-  // (Formspree, a Vercel serverless function, a CRM webhook — anything
-  // that accepts a POST). Until then, submission is simulated locally so
-  // the funnel can be tested end to end.
-  var FORM_ENDPOINT = null;
+  // Formspree endpoint (project: "Mizu Move Requests") — delivers
+  // submissions to hello@mizumove.com.
+  var FORM_ENDPOINT = "https://formspree.io/f/xaenokpk";
 
   // TODO: replace with the real GA4 Measurement ID once a property exists.
   var GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
@@ -1662,10 +1809,106 @@
     });
   });
 
+  /* hero_primary_cta_click — the one dominant hero action gets its own
+     named event, distinct from the generic cta_click every CTA fires. */
+  var heroPrimaryCta = document.getElementById('hero-primary-cta');
+  if (heroPrimaryCta) {
+    heroPrimaryCta.addEventListener('click', function(){
+      trackEvent('hero_primary_cta_click', utmParams({ device: deviceType() }));
+    });
+  }
+
+  /* section_cta_click — every contextual, level-2 CTA between major
+     sections (spec §20) carries data-section-cta so it can be told apart
+     from the level-1 primary CTA in the funnel data. */
+  document.querySelectorAll('[data-section-cta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      trackEvent('section_cta_click', utmParams({
+        section_name: el.getAttribute('data-section-cta') || '',
+        cta_text: (el.textContent || '').trim(),
+        device: deviceType()
+      }));
+    });
+  });
+
   /* email_click — fires separately from cta_click for any mailto link. */
   document.querySelectorAll('a[href^="mailto:"]').forEach(function(el){
     el.addEventListener('click', function(){
       trackEvent('email_click', utmParams({ cta_location: el.getAttribute('data-cta-location') || '' }));
+    });
+  });
+
+  /* =====================================================================
+     Direct contact — WhatsApp / phone. Deliberately secondary to the
+     primary "Get my free relocation plan" CTA everywhere it appears (see
+     the phone/WhatsApp implementation brief): every .js-whatsapp-cta and
+     .js-phone-cta element fires its own named event (whatsapp_click /
+     phone_click) instead of the generic cta_click, so these don't carry
+     data-cta and won't double-fire.
+     ===================================================================== */
+  var CONTACT_STORAGE_KEY = 'mizu_last_contact';
+
+  function deviceType(){
+    return window.matchMedia('(max-width:719px)').matches ? 'mobile' : 'desktop';
+  }
+
+  /* Remembers the last direct-contact channel touched so that if the
+     visitor later submits the form, that submission can be attributed to
+     "reached out first, then filled the form" rather than a cold form
+     fill. Only persisted with Functionality consent — same category as
+     UTM persistence — otherwise it's in-memory for this pageview only. */
+  var lastContact = null;
+  function rememberContactChannel(channel, loc){
+    lastContact = { channel: channel, location: loc };
+    if (consent.functionality) {
+      try{ localStorage.setItem(CONTACT_STORAGE_KEY, JSON.stringify(lastContact)); }catch(e){}
+    }
+  }
+  (function loadLastContact(){
+    if (!consent.functionality) return;
+    try{
+      var stored = JSON.parse(localStorage.getItem(CONTACT_STORAGE_KEY) || 'null');
+      if (stored && stored.channel) lastContact = stored;
+    }catch(e){}
+  })();
+
+  // WhatsApp intentionally does not appear inside the route checker or
+  // anywhere else contextual to a specific route (spec §30/§31) — it's
+  // kept to a small, fixed set of locations (mobile sticky bar, the
+  // before-form panel, the footer, and the success state) so it never
+  // becomes a second competing funnel. `fromInput`/`toInput` are still
+  // referenced below only to log origin/destination on a whatsapp_click
+  // when they happen to be filled in, per the analytics spec.
+  var fromInput = document.getElementById('from');
+  var toInput = document.getElementById('to');
+
+  document.querySelectorAll('.js-whatsapp-cta').forEach(function(el){
+    el.addEventListener('click', function(){
+      var loc = el.getAttribute('data-location') || '';
+      var origin = fromInput ? fromInput.value.trim() : '';
+      var destination = toInput ? toInput.value.trim() : '';
+      trackEvent('whatsapp_click', utmParams({
+        cta_location: loc,
+        entry_point: loc,
+        page: window.location.pathname,
+        device: deviceType(),
+        origin: origin,
+        destination: destination
+      }));
+      rememberContactChannel('whatsapp', loc);
+    });
+  });
+
+  document.querySelectorAll('.js-phone-cta').forEach(function(el){
+    el.addEventListener('click', function(){
+      var loc = el.getAttribute('data-location') || '';
+      trackEvent('phone_click', utmParams({
+        cta_location: loc,
+        entry_point: loc,
+        page: window.location.pathname,
+        device: deviceType()
+      }));
+      rememberContactChannel('phone', loc);
     });
   });
 
@@ -1707,11 +1950,10 @@
 
     loadCalendlyAssets();
 
-    if (!calendlyConfigured()) {
-      var note = document.getElementById('calendar-note');
-      if (note) note.classList.add('shown');
-      return;
-    }
+    // Every consultation trigger is hidden at load time when this isn't
+    // configured (see below), so this shouldn't be reachable — but if it
+    // is, fail silently rather than surface a dev-facing note to a visitor.
+    if (!calendlyConfigured()) return;
 
     function tryOpen(attempt){
       if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
@@ -1728,22 +1970,26 @@
   }
 
   var calendlyTriggers = [
-    { id: 'hero-calendly-link', source: 'hero' },
-    { id: 'book-call-link', source: 'plan_form' }
+    { id: 'book-call-link', source: 'plan_form' },
+    { id: 'success-calendly-link', source: 'success' }
   ];
   calendlyTriggers.forEach(function(t){
     var el = document.getElementById(t.id);
     if (!el) return;
+    if (!calendlyConfigured()) {
+      // Hide the link/button entirely rather than show a dead link or
+      // explain to a visitor that it isn't wired up yet (spec §14). The
+      // parent wrapper is hidden too, so no stray "Prefer to talk first?"
+      // lead-in text is left dangling.
+      var wrapper = el.closest('.form-secondary-action, .success-actions') || el;
+      wrapper.hidden = true;
+      return;
+    }
     el.addEventListener('click', function(e){
       e.preventDefault();
       openCalendly(t.source);
     });
   });
-
-  if (!calendlyConfigured()) {
-    var noteEl = document.getElementById('calendar-note');
-    if (noteEl) noteEl.classList.add('shown');
-  }
 
   // Calendly posts a message to the window when a booking is actually
   // confirmed — this is the real "calendar_booking" conversion, distinct
@@ -1885,7 +2131,28 @@
     var step1 = document.getElementById('step-1');
     var step2 = document.getElementById('step-2');
     var routeResult = document.getElementById('route-result');
+    var routeResultActions = document.getElementById('route-result-actions');
+    var routeContinueBtn = document.getElementById('route-continue-btn');
     var checkBtn = document.getElementById('check-route-btn');
+
+    // route_checker_start — fires once, the first time either field gets input,
+    // mirroring the form_start pattern above.
+    var routeStarted = false;
+    ['from', 'to'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', function(){
+        if (!routeStarted) {
+          routeStarted = true;
+          trackEvent('route_checker_start', utmParams({ form_type: 'relocation_plan' }));
+        }
+      });
+    });
+
+    // Holds the coverage result from the last check, so the Continue
+    // button (clicked separately, after the visitor has read the result)
+    // knows what to do without re-running the check.
+    var lastRouteCheck = null;
 
     checkBtn.addEventListener('click', function(){
       var from = document.getElementById('from');
@@ -1895,31 +2162,83 @@
       if (!to.value.trim()) { setError('field-to', true); ok = false; } else setError('field-to', false);
       if (!ok) return;
 
-      var scenarioInput = form.querySelector('input[name="scenario"]:checked');
-      var covered = isRouteCovered(to.value);
+      // Loading state (spec P0.13) — the check itself is instant today,
+      // but a brief, deliberate pause keeps this consistent with the
+      // submit button's loading pattern and avoids an instant, jarring
+      // flash of the result.
+      checkBtn.classList.add('is-loading');
+      checkBtn.disabled = true;
 
-      routeResult.innerHTML = covered
-        ? '<b>Good news — we can help with this route.</b><br>We’ll review your move and come back with suitable options from our vetted network.'
-        : '<b>We don’t currently have a confirmed mover for this route.</b><br>But we’re constantly expanding our network. Leave your details and we’ll check what options may be available.';
-      routeResult.classList.remove('covered', 'not-covered');
-      routeResult.classList.add('shown', covered ? 'covered' : 'not-covered');
+      setTimeout(function(){
+        checkBtn.classList.remove('is-loading');
+        checkBtn.disabled = false;
 
-      // The step-2 CTA reflects what was just promised in the result
-      // above, rather than a fixed label regardless of coverage.
+        var scenarioInput = form.querySelector('input[name="scenario"]:checked');
+        var covered = isRouteCovered(to.value);
+        lastRouteCheck = {
+          covered: covered,
+          origin: from.value.trim(),
+          destination: to.value.trim(),
+          scenario: scenarioInput ? scenarioInput.value : '',
+          relocation_type: scenarioInput ? scenarioInput.getAttribute('data-label') : ''
+        };
+
+        // Two honest states only (spec §11) — a confident third "unsupported"
+        // state isn't implemented because the underlying check (a keyword
+        // match against COVERED_DESTINATIONS) can't actually distinguish it
+        // from "not yet confirmed" — showing one would imply certainty the
+        // site doesn't have. Copy explains *why* Step 2 comes next either
+        // way (spec §08), so the form doesn't feel like a non sequitur.
+        routeResult.innerHTML = covered
+          ? '<b>This looks like a route we can help you explore.</b><br>To build your relocation plan, we just need a few details.'
+          : '<b>We’ll need to check this route with our network.</b><br>Let’s get a few details so we can confirm your options.';
+        routeResult.classList.remove('covered', 'not-covered');
+        routeResult.classList.add('shown', covered ? 'covered' : 'not-covered');
+
+        // The form stays the primary path either way — only its label
+        // reflects what was just promised in the result above.
+        routeContinueBtn.textContent = covered ? 'Continue with my relocation plan →' : 'Ask Mizu to check →';
+        if (routeResultActions) routeResultActions.classList.add('shown');
+
+        trackEvent('route_checker_complete', utmParams({
+          form_type: 'relocation_plan',
+          scenario: lastRouteCheck.scenario,
+          relocation_type: lastRouteCheck.relocation_type,
+          origin: lastRouteCheck.origin,
+          destination: lastRouteCheck.destination,
+          route_covered: covered
+        }));
+        trackEvent('route_checker_result', utmParams({
+          origin: lastRouteCheck.origin,
+          destination: lastRouteCheck.destination,
+          route_covered: covered
+        }));
+      }, 450);
+    });
+
+    routeContinueBtn.addEventListener('click', function(){
+      if (!lastRouteCheck) return;
+
+      // The step-2 CTA reflects what was promised in the route result,
+      // rather than a fixed label regardless of coverage.
       var idleLabel = document.querySelector('#submit-btn .btn-label-idle');
-      if (idleLabel) idleLabel.textContent = covered ? 'Get my free relocation plan →' : 'Ask Mizu to check →';
+      if (idleLabel) idleLabel.textContent = lastRouteCheck.covered ? 'Get my free relocation plan →' : 'Ask Mizu to check →';
 
       trackEvent('form_step_1_complete', utmParams({
         form_type: 'relocation_plan',
-        scenario: scenarioInput ? scenarioInput.value : '',
-        relocation_type: scenarioInput ? scenarioInput.getAttribute('data-label') : '',
-        origin: from.value.trim(),
-        destination: to.value.trim(),
-        route_covered: covered
+        scenario: lastRouteCheck.scenario,
+        relocation_type: lastRouteCheck.relocation_type,
+        origin: lastRouteCheck.origin,
+        destination: lastRouteCheck.destination,
+        route_covered: lastRouteCheck.covered
       }));
+
+      var step2RouteSummary = document.getElementById('step2-route-summary');
+      if (step2RouteSummary) step2RouteSummary.textContent = lastRouteCheck.origin + ' → ' + lastRouteCheck.destination;
 
       step1.hidden = true;
       step2.hidden = false;
+      trackEvent('form_step_2_start', utmParams({ form_type: 'relocation_plan' }));
       document.getElementById('name').focus();
     });
 
@@ -1964,7 +2283,12 @@
         utm_content: utms.utm_content || '',
         utm_term: utms.utm_term || '',
         landing_page: utms.landing_page || window.location.pathname,
-        submitted_at: document.getElementById('submitted_at').value
+        submitted_at: document.getElementById('submitted_at').value,
+        // If the visitor reached out on WhatsApp/phone before filling this
+        // form, credit that as how the lead really started rather than
+        // recording every conversion as a cold form fill.
+        lead_source_detail: lastContact ? lastContact.channel : 'website_form',
+        entry_point: lastContact ? lastContact.location : 'form'
       };
 
       isSubmitting = true;
@@ -2000,7 +2324,14 @@
       if (FORM_ENDPOINT) {
         fetch(FORM_ENDPOINT, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            // Formspree responds with a plain JSON result (rather than an
+            // HTML redirect) only when the request explicitly asks for
+            // JSON back — without this it still accepts the submission,
+            // but response handling gets less predictable.
+            'Accept': 'application/json'
+          },
           body: JSON.stringify(payload)
         }).then(function(res){
           if (res.ok) onSuccess(); else onFailure();
