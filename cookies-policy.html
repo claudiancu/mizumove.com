@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cookie Policy | Mizu Move</title>
+<meta name="description" content="How Mizu Move uses cookies and similar technologies, what each one does, and how to control them in your browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.mizumove.com/cookies-policy.html">
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap">
+<style>
+  :root{
+    --ink:#241b16;
+    --ink-soft:#7a6a5c;
+    --paper:#fffaf3;
+    --paper-soft:#fbeee0;
+    --tide:#e5714c;
+    --tide-strong:#d1502b;
+    --brass:#6f9473;
+    --line:#f1e2ce;
+    --panel:#ffffff;
+    --focus: 3px solid #d1502b;
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; color-scheme:light; }
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:840px; margin:0 auto; padding:0 clamp(20px,4vw,48px); }
+  a{ color:var(--tide-strong); }
+  a:focus-visible, button:focus-visible{ outline:var(--focus); outline-offset:2px; }
+  h1,h2{ font-family:"Fraunces", Georgia, serif; font-weight:600; margin:0; color:var(--ink); }
+
+  header{ border-bottom:1px solid var(--line); background:var(--paper); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,4vw,48px); max-width:1120px; margin:0 auto; }
+  .wordmark{ font-family:"Fraunces", serif; font-weight:600; font-size:20px; color:var(--ink); text-decoration:none; display:flex; align-items:baseline; gap:2px; }
+  .wordmark em{ font-style:italic; color:var(--tide-strong); font-weight:500; }
+  .nav a.back{ font-size:14.5px; color:var(--ink-soft); text-decoration:none; }
+  .nav a.back:hover{ color:var(--tide-strong); }
+
+  main{ padding:clamp(40px,7vw,72px) 0 clamp(56px,8vw,96px); }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--tide-strong); font-weight:700;
+  }
+  h1{ font-size:clamp(30px,4vw,42px); margin-top:10px; }
+  .updated{ margin-top:10px; font-size:13.5px; color:var(--ink-soft); }
+
+  .dev-note{
+    margin-top:24px; padding:14px 16px;
+    border:1px dashed var(--line); border-radius:12px;
+    background:var(--paper-soft);
+    font-size:13.5px; color:var(--ink-soft);
+  }
+  .dev-note b{ color:var(--ink); }
+
+  section.block{ margin-top:40px; }
+  section.block h2{ font-size:22px; }
+  section.block p, section.block li{ margin-top:12px; color:var(--ink-soft); font-size:15.5px; }
+  section.block ul, section.block ol{ padding-left:20px; }
+
+  .placeholder{
+    background:color-mix(in srgb, var(--tide) 14%, transparent);
+    padding:1px 6px; border-radius:4px; color:var(--ink);
+  }
+
+  table.cookie-table{
+    width:100%; border-collapse:collapse; margin-top:18px;
+    font-size:14px; background:var(--panel);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  }
+  table.cookie-table th, table.cookie-table td{
+    text-align:left; padding:12px 14px; border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  table.cookie-table th{
+    background:var(--paper-soft); font-size:12px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+  table.cookie-table tr:last-child td{ border-bottom:none; }
+  .table-scroll{ overflow-x:auto; }
+
+  .cat-tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.04em;
+    text-transform:uppercase; padding:3px 9px; border-radius:999px;
+    background:color-mix(in srgb, var(--brass) 18%, transparent); color:var(--ink);
+  }
+
+  footer{ padding:32px 0 40px; border-top:1px solid var(--line); }
+  .footer-grid{ display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; }
+  .footer-links{ display:flex; gap:20px; list-style:none; margin:0; padding:0; }
+  .footer-links a{ font-size:13.5px; color:var(--ink-soft); text-decoration:none; }
+  .footer-links a:hover{ color:var(--tide-strong); }
+</style>
+
+<header>
+  <nav class="nav">
+    <a class="wordmark" href="/">Mizu <em>Move</em></a>
+    <a class="back" href="/">← Back to homepage</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="eyebrow">Legal</span>
+    <h1>Cookie Policy</h1>
+    <p class="updated">Last updated: 22 September 2026</p>
+
+    <!--
+      DEV NOTE (not for the live page copy above the fold, but left here
+      deliberately since it matters more than most TODOs on this site):
+
+      1. LEGAL ENTITY — Mizu Move isn't formally incorporated yet, so the
+         "Who we are" section below uses a visible placeholder rather than
+         silently omitting the data-controller identity GDPR requires.
+         Replace it the moment there's a registered company name + address.
+
+      2. CONSENT — this page only documents what cookies the site sets;
+         it does not gate them. Right now GA4 and the Calendly widget load
+         unconditionally on page view, which does not satisfy GDPR/ePrivacy
+         for EU visitors (prior opt-in consent is required for non-essential
+         cookies). This was a deliberate scope decision when this file was
+         written — a consent-management banner that blocks GA4/Calendly
+         until accepted is a separate, still-open task. Get this page and
+         that banner reviewed by an actual lawyer before relying on either
+         for compliance — this is a structured starting draft, not legal
+         advice.
+    -->
+
+    <section class="block">
+      <h2>Who we are</h2>
+      <p>This Cookie Policy explains how <span class="placeholder">[Mizu Move — legal entity name and registered address to be added once incorporated]</span> ("Mizu Move", "we", "us") uses cookies and similar technologies on mizumove.com (the "Site"). It should be read alongside our <a href="/privacy-policy.html">Privacy Policy</a>, which explains how we handle personal data more generally.</p>
+    </section>
+
+    <section class="block">
+      <h2>What is a cookie?</h2>
+      <p>A cookie is a small text file that a website stores on your device when you visit it. Cookies let a site remember things about your visit, like whether you've seen a particular message before, or help a site understand how it's being used. Some cookies are deleted when you close your browser ("session cookies"); others stay on your device for a set period, or until you delete them ("persistent cookies").</p>
+      <p>We also use one similar browser-storage technology, described below, that behaves like a cookie for our purposes even though it isn't technically one.</p>
+    </section>
+
+    <section class="block">
+      <h2>How we use cookies</h2>
+      <p>We keep this deliberately narrow. Mizu Move uses cookies and similar technologies to:</p>
+      <ul>
+        <li>understand, in aggregate, how visitors use the Site, so we can tell what's working and what isn't;</li>
+        <li>let the "Book a 20-min consultation" button open a working scheduling widget; and</li>
+        <li>remember which marketing link brought you to the Site, so if you submit the relocation-plan form, your enquiry is correctly credited to the right campaign.</li>
+      </ul>
+      <p>We do not currently use cookies for advertising, retargeting, or cross-site tracking. If that changes — for example, if we add Google Ads conversion tracking — we'll update this policy first.</p>
+    </section>
+
+    <section class="block">
+      <h2>Cookies and similar technologies we use</h2>
+      <div class="table-scroll">
+        <table class="cookie-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Provider</th>
+              <th>Category</th>
+              <th>Purpose</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>_ga</code></td>
+              <td>Google Analytics (GA4)</td>
+              <td><span class="cat-tag">Analytics</span></td>
+              <td>Distinguishes visitors from one another for aggregate traffic statistics.</td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td><code>_ga_&lt;container-id&gt;</code></td>
+              <td>Google Analytics (GA4)</td>
+              <td><span class="cat-tag">Analytics</span></td>
+              <td>Persists session state so GA4 can measure how people move through the Site.</td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td><code>_gid</code></td>
+              <td>Google Analytics (GA4)</td>
+              <td><span class="cat-tag">Analytics</span></td>
+              <td>Short-lived visitor identifier used for the same purpose as <code>_ga</code>.</td>
+              <td>24 hours</td>
+            </tr>
+            <tr>
+              <td>Calendly session cookies (various names)</td>
+              <td>Calendly</td>
+              <td><span class="cat-tag">Functionality — third party</span></td>
+              <td>Set by Calendly's embedded widget when you open "Book a 20-min consultation," so the widget can run and remember your booking session. Set by Calendly, not by us — see <a href="https://calendly.com/privacy" target="_blank" rel="noopener">Calendly's own privacy notice</a> for details.</td>
+              <td>Session to 30 days, set by Calendly</td>
+            </tr>
+            <tr>
+              <td><code>mizu_utms</code> <em>(browser local storage, not a cookie)</em></td>
+              <td>Mizu Move (first party)</td>
+              <td><span class="cat-tag">Functionality</span></td>
+              <td>Remembers the campaign parameters (e.g. <code>utm_source</code>) from the link you arrived on, so if you submit the relocation-plan form, we know which campaign to credit. Contains no content beyond those campaign labels.</td>
+              <td>Until you clear your browser's site data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Loading Google Fonts (for the typefaces on this Site) and the Calendly widget script also means your browser makes a direct request to Google's and Calendly's servers, which sees your IP address in the ordinary course of serving that file — independent of whether a cookie is set. This is standard for embedding any third-party resource.</p>
+    </section>
+
+    <section class="block">
+      <h2>Managing and disabling cookies</h2>
+      <p>Most browsers let you see what cookies you have and delete them individually or block cookies from particular or all sites. Note that if you block or delete cookies, some parts of the Site — like the booking widget — may not work as intended.</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Managing cookies in Google Chrome</a></li>
+        <li><a href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop" target="_blank" rel="noopener">Managing cookies in Mozilla Firefox</a></li>
+        <li><a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" rel="noopener">Managing cookies in Safari</a></li>
+        <li><a href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener">Managing cookies in Microsoft Edge</a></li>
+      </ul>
+      <p>You can also opt out of Google Analytics specifically, across all sites that use it, with Google's <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.</p>
+    </section>
+
+    <section class="block">
+      <h2>Changes to this policy</h2>
+      <p>We may update this Cookie Policy as the Site changes — for example, if we add a new analytics tool or advertising integration. We'll update the "Last updated" date above when we do. Significant changes will be reflected here before they take effect.</p>
+    </section>
+
+    <section class="block">
+      <h2>Contact us</h2>
+      <p>Questions about this policy or how we use cookies: <a href="mailto:hello@mizumove.com">hello@mizumove.com</a>.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-word" style="font-family:'Fraunces', serif; font-size:16px; font-weight:600;">Mizu Move</div>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="mailto:hello@mizumove.com">hello@mizumove.com</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

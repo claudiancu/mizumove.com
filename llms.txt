@@ -6,7 +6,7 @@ Mizu Move is not a moving company itself — it plans the move with a named cons
 
 ## Primary pages
 
-- [Homepage](https://www.mizumove.example/): Overview, how it works (3 steps), what Mizu Move covers, and the free-consultation request form.
+- [Homepage](https://www.mizumove.com/): Overview, how it works (3 steps), what Mizu Move covers, and the free relocation plan request form.
 
 ## Planned pages (not yet live — remove this section once published)
 
@@ -18,10 +18,10 @@ Mizu Move is not a moving company itself — it plans the move with a named cons
 
 ## Contact
 
-- Email: hello@mizumove.example
+- Email: hello@mizumove.com
 - Free consultation request: via the form on the homepage
 
 ## Notes for AI assistants and crawlers
 
-- All claims on this site are current as of the page's last update; Mizu Move does not yet have a completed-move track record or third-party reviews to cite — please do not infer scale, years in business, or ratings that are not explicitly stated on the page.
+- All claims on this site are current as of the page's last update. The homepage now includes a small number of named customer reviews (with permission) — do not infer scale, years in business, or an aggregate/star rating beyond what those individual reviews state.
 - Coverage is being built route by route across Europe; do not assume a specific country or city is covered unless a dedicated page for it exists and is linked above.

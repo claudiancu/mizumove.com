@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Mizu Move — sitemap.xml
-  Replace www.mizumove.example with your real domain once deployed,
-  then submit this URL in Google Search Console and Bing Webmaster Tools.
+  Submit this URL in Google Search Console and Bing Webmaster Tools.
 
   Only the homepage is live today. The commented-out <url> blocks below
   are the pages recommended in the site-architecture plan — uncomment
@@ -12,44 +11,56 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://www.mizumove.example/</loc>
+    <loc>https://www.mizumove.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
+  <url>
+    <loc>https://www.mizumove.com/cookies-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mizumove.com/privacy-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!--
   <url>
-    <loc>https://www.mizumove.example/international-movers/</loc>
+    <loc>https://www.mizumove.com/international-movers/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.mizumove.example/relocation-consultant/</loc>
+    <loc>https://www.mizumove.com/relocation-consultant/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.mizumove.example/corporate-relocation/</loc>
+    <loc>https://www.mizumove.com/corporate-relocation/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://www.mizumove.example/relocating-to-europe/</loc>
+    <loc>https://www.mizumove.com/relocating-to-europe/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://www.mizumove.example/about/</loc>
+    <loc>https://www.mizumove.com/about/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://www.mizumove.example/guides/</loc>
+    <loc>https://www.mizumove.com/guides/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

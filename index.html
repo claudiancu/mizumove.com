@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>International Relocation Services &amp; Vetted Movers | Mizu Move</title>
-<meta name="description" content="Mizu Move pairs you with a personal relocation consultant and a vetted network of international movers for your cross-border move. Book a free consultation.">
+<meta name="description" content="Mizu Move pairs you with a personal relocation consultant and a vetted network of international movers for your cross-border move. Get your free relocation plan.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.mizumove.example/">
+<link rel="canonical" href="https://www.mizumove.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mizu Move">
 <meta property="og:title" content="International Relocation Services & Vetted Movers | Mizu Move">
 <meta property="og:description" content="A personal relocation consultant and a vetted network of international movers, matched to your route across Europe.">
-<meta property="og:url" content="https://www.mizumove.example/">
+<meta property="og:url" content="https://www.mizumove.com/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="International Relocation Services & Vetted Movers | Mizu Move">
 <meta name="twitter:description" content="A personal relocation consultant and a vetted network of international movers, matched to your route across Europe.">
@@ -22,10 +22,10 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Mizu Move",
-  "url": "https://www.mizumove.example",
+  "url": "https://www.mizumove.com",
   "description": "Mizu Move pairs people and companies relocating across borders with a personal relocation consultant and a vetted network of international movers.",
   "areaServed": "Europe",
-  "email": "hello@mizumove.example"
+  "email": "hello@mizumove.com"
 }
 </script>
 <script type="application/ld+json">
@@ -100,6 +100,15 @@
   ]
 }
 </script>
+
+<!--
+  GA4 (Measurement ID: TODO replace G-XXXXXXXXXX once a real GA4 property
+  exists) and the Calendly widget are NOT loaded unconditionally here.
+  Both set non-essential cookies, so both are only injected after the
+  visitor accepts them in the cookie-consent banner — see the "Consent
+  manager" block near the top of the script at the bottom of this page,
+  and cookies-policy.html for what each one does.
+-->
 </head>
 <body>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600&family=Caveat:wght@600;700&display=swap">
@@ -118,6 +127,7 @@
     --panel:#ffffff;
     --shadow: 0 10px 26px rgba(120,66,32,0.10);
     --focus: 3px solid #d1502b;
+    --err:#b3261e;
   }
   .eyebrow, .route-card-head, .field label, .glyph, .hero-note, .problem-item .tag, .step-num{
     font-weight:700;
@@ -218,20 +228,38 @@
     font-weight:700;
     font-size:14.5px;
     padding:13px 24px;
+    min-height:46px;
     border-radius:999px;
     border:1px solid transparent;
     cursor:pointer;
     text-decoration:none;
-    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
   }
   .btn-primary{ background:var(--tide-strong); color:var(--paper-soft); }
   .btn-primary:hover{ background:var(--tide); transform:translateY(-1px); }
+  .btn-primary:disabled{ opacity:.65; cursor:default; transform:none; }
   .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
   .btn-ghost:hover{ border-color:var(--tide-strong); color:var(--tide-strong); }
+  .btn-sm{ padding:10px 18px; font-size:13.5px; min-height:40px; }
   .nav-cta{ display:none; }
   @media (min-width:720px){ .nav-cta{ display:inline-flex; } }
   .nav-links{ display:none; }
   @media (min-width:720px){ .nav-links{ display:flex; } }
+
+  /* ---------- spinner ---------- */
+  .spinner{
+    width:15px; height:15px; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.45);
+    border-top-color:#fff;
+    display:none;
+    animation:spin .7s linear infinite;
+    margin-right:8px;
+  }
+  .is-loading .spinner{ display:inline-block; }
+  .is-loading .btn-label-idle{ display:none; }
+  .btn-label-loading{ display:none; }
+  .is-loading .btn-label-loading{ display:inline; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -250,7 +278,7 @@
     font-size:clamp(34px,4.6vw,54px);
     line-height:1.08;
     margin-top:14px;
-    max-width:16ch;
+    max-width:18ch;
   }
   .hero h1 i{ font-style:italic; color:var(--tide-strong); font-weight:500; }
   .hero p{
@@ -262,6 +290,7 @@
   .hero-actions{
     display:flex; flex-wrap:wrap; gap:14px;
     margin-top:30px;
+    align-items:center;
   }
   .hero-note{
     margin-top:16px;
@@ -270,6 +299,24 @@
     color:var(--ink-soft);
     letter-spacing:0.02em;
   }
+  .hero-subnav{
+    margin-top:10px;
+    font-size:13.5px;
+  }
+  .hero-subnav a{ color:var(--ink-soft); text-decoration:underline; }
+  .hero-subnav a:hover{ color:var(--tide-strong); }
+  .whats-next{
+    margin-top:22px; padding:16px 18px;
+    border:1px solid var(--line); border-radius:14px;
+    background:var(--panel);
+    max-width:420px;
+  }
+  .whats-next b{
+    display:block; font-size:12px; font-weight:700; letter-spacing:0.04em;
+    text-transform:uppercase; color:var(--tide-strong); margin-bottom:8px;
+  }
+  .whats-next ol{ margin:0; padding-left:18px; display:grid; gap:4px; }
+  .whats-next li{ font-size:13.5px; color:var(--ink-soft); }
 
   /* ---------- Route panel ---------- */
   .route-card{
@@ -288,34 +335,6 @@
     color:var(--ink-soft);
     margin-bottom:6px;
   }
-  .route-svg{ width:100%; height:auto; display:block; margin:10px 0 6px; }
-  .route-svg .path{
-    fill:none; stroke:var(--tide-strong); stroke-width:2;
-    stroke-dasharray:6 7; stroke-linecap:round;
-  }
-  .route-svg .dot{ fill:var(--tide-strong); }
-  .route-svg .mark{ fill:var(--paper); stroke:var(--ink); stroke-width:1.4; }
-  .route-svg .pulse{
-    fill:var(--brass);
-    offset-path:path("M20,86 C 90,10 190,150 300,60");
-    animation:travel 6s linear infinite;
-  }
-  @keyframes travel{
-    from{ offset-distance:0%; opacity:0; }
-    5%{ opacity:1; }
-    95%{ opacity:1; }
-    to{ offset-distance:100%; opacity:0; }
-  }
-  .route-labels{
-    display:flex; justify-content:space-between;
-    font-size:13px; color:var(--ink-soft);
-  }
-  .route-labels b{ color:var(--ink); font-weight:600; }
-  .route-foot{
-    margin-top:18px; padding-top:16px;
-    border-top:1px dashed var(--line);
-    font-size:13.5px; color:var(--ink-soft);
-  }
 
   /* ---------- Section scaffolding ---------- */
   section{ padding:clamp(52px,7vw,84px) 0; border-bottom:1px solid var(--line); }
@@ -324,7 +343,7 @@
   .section-head h2{ font-size:clamp(26px,3.2vw,36px); margin-top:12px; }
   .section-head p{ margin-top:14px; color:var(--ink-soft); font-size:16.5px; }
 
-  /* ---------- Problem section ---------- */
+  /* ---------- Problem → Solution section ---------- */
   .problem-grid{
     display:grid; gap:1px;
     background:var(--line);
@@ -337,6 +356,7 @@
   .problem-item{
     background:var(--panel);
     padding:26px 24px;
+    display:flex; flex-direction:column;
   }
   .problem-item .tag{
     font-family:"Nunito Sans", sans-serif;
@@ -347,6 +367,12 @@
     font-size:18px; margin-top:10px; font-weight:600;
   }
   .problem-item p{ margin-top:8px; color:var(--ink-soft); font-size:15px; }
+  .problem-item .solution{
+    margin-top:16px; padding-top:14px;
+    border-top:1px dashed var(--line);
+    font-size:14px;
+  }
+  .problem-item .solution b{ color:var(--tide-strong); }
 
   /* ---------- How it works ---------- */
   .steps{ display:grid; gap:0; }
@@ -364,8 +390,22 @@
     padding-top:2px;
     min-width:34px;
   }
-  .step h3{ font-size:19px; }
+  .step h3{ font-size:19px; display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; }
+  .step-time{
+    font-family:"Nunito Sans", sans-serif;
+    font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--brass);
+  }
   .step p{ margin-top:8px; color:var(--ink-soft); font-size:15.5px; max-width:56ch; }
+
+  /* ---------- Segment intro (B2C/B2B) ---------- */
+  .segment-intro{
+    display:grid; gap:18px;
+    grid-template-columns:1fr;
+    margin-bottom:26px;
+  }
+  @media (min-width:640px){ .segment-intro{ grid-template-columns:1fr 1fr; } }
+  .segment-intro .card{ background:var(--paper-soft); }
 
   /* ---------- Built for grid ---------- */
   .cards{
@@ -386,6 +426,96 @@
   .card h3{ font-size:18.5px; margin-top:10px; }
   .card p{ margin-top:8px; color:var(--ink-soft); font-size:15px; }
 
+  /* ---------- Reviews (slider) ---------- */
+  .reviews-slider{ position:relative; max-width:720px; margin:0 auto; }
+  .reviews-track{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    border-radius:18px;
+  }
+  .reviews-track::-webkit-scrollbar{ display:none; }
+  .reviews-track:focus-visible{ outline:var(--focus); outline-offset:4px; }
+  .review-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 28px 26px;
+    display:flex; flex-direction:column;
+    flex:0 0 100%;
+    scroll-snap-align:center;
+  }
+  .slider-controls{
+    display:flex; align-items:center; justify-content:center;
+    gap:16px; margin-top:22px;
+  }
+  .slider-arrow{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line); background:var(--panel);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--ink); flex:none;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .slider-arrow:hover{ border-color:var(--tide-strong); color:var(--tide-strong); }
+  .slider-dots{ display:flex; align-items:center; gap:8px; }
+  .slider-dot{
+    width:8px; height:8px; border-radius:5px;
+    background:var(--line); border:none; padding:0; cursor:pointer;
+    transition:width .2s ease, background .2s ease;
+  }
+  .slider-dot[aria-current="true"]{ background:var(--tide-strong); width:22px; }
+  .review-card .objection{
+    display:inline-block; font-family:"Nunito Sans", sans-serif;
+    font-size:10.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--brass); margin-bottom:8px;
+  }
+  .review-card .quote-mark{
+    font-family:"Fraunces", serif;
+    font-size:40px; line-height:1;
+    color:var(--tide);
+    margin-bottom:6px;
+  }
+  .review-card .quote{
+    font-size:15px; color:var(--ink); flex:1;
+    font-style:italic;
+  }
+  .review-card .attribution{
+    margin-top:18px; padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+  .review-card .attribution .who{
+    font-weight:700; font-size:14.5px; color:var(--ink);
+  }
+  .review-card .attribution .meta{
+    margin-top:2px; font-size:13px; color:var(--ink-soft);
+  }
+  .review-card .attribution .profile{
+    display:inline-block; margin-top:8px;
+    font-family:"Nunito Sans", sans-serif;
+    font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--brass); font-weight:700;
+  }
+
+  /* ---------- Free-offer section ---------- */
+  .free-grid{
+    display:grid; gap:32px;
+    grid-template-columns:1fr;
+  }
+  @media (min-width:800px){ .free-grid{ grid-template-columns:1fr 1fr; } }
+  .check-list{ list-style:none; margin:18px 0 0; padding:0; display:grid; gap:12px; }
+  .check-list li{ display:flex; gap:10px; font-size:15px; align-items:flex-start; }
+  .check-list svg{ flex:none; margin-top:3px; color:var(--brass); }
+  .free-note{
+    margin-top:18px; padding:14px 16px;
+    border:1px solid var(--line); border-radius:12px;
+    background:var(--paper-soft);
+    font-size:14px; color:var(--ink-soft);
+  }
+  .free-note b{ color:var(--ink); }
+
   /* ---------- Form ---------- */
   .plan{ background:var(--paper-soft); }
   .plan-grid{
@@ -401,6 +531,20 @@
     align-items:flex-start;
   }
   .plan-points svg{ flex:none; margin-top:3px; color:var(--tide-strong); }
+
+  .risk-reversal{
+    margin-top:28px; padding:20px 20px 18px;
+    border:1px solid var(--line); border-radius:16px;
+    background:var(--panel);
+  }
+  .risk-reversal .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .risk-reversal .tags span{
+    font-size:12px; font-weight:700; letter-spacing:0.02em;
+    padding:6px 12px; border-radius:999px;
+    background:color-mix(in srgb, var(--brass) 16%, transparent);
+    color:var(--ink);
+  }
+  .risk-reversal ol{ margin:0; padding-left:18px; display:grid; gap:6px; font-size:14px; color:var(--ink-soft); }
 
   form{
     background:var(--panel);
@@ -419,15 +563,21 @@
   }
   .field input, .field select, .field textarea{
     font-family:"Nunito Sans", sans-serif;
-    font-size:15px;
-    padding:11px 12px;
+    font-size:16px;
+    padding:12px 12px;
     border:1px solid var(--line);
     border-radius:12px;
     background:var(--paper);
     color:var(--ink);
+    width:100%;
   }
   .field textarea{ resize:vertical; min-height:80px; }
   .field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft); opacity:.7; }
+  .field.has-error input, .field.has-error select{ border-color:var(--err); }
+  .field-error{
+    font-size:12.5px; color:var(--err); display:none; min-height:1px;
+  }
+  .field.has-error .field-error{ display:block; }
   .form-submit{ width:100%; margin-top:6px; padding:13px 20px; font-size:15px; }
   .form-fine{
     margin-top:14px; font-size:12.5px; color:var(--ink-soft); line-height:1.5;
@@ -443,6 +593,39 @@
   }
   form.sent .form-fields{ display:none; }
   form.sent .form-success{ display:block; }
+
+  /* ---------- Two-step form ---------- */
+  .form-step{ display:block; }
+  .form-step[hidden]{ display:none; }
+  .step-label{
+    font-family:"Nunito Sans", sans-serif;
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--tide-strong); font-weight:700; margin-bottom:12px; display:block;
+  }
+  .route-result{
+    margin-top:4px; margin-bottom:16px;
+    padding:12px 14px;
+    border-radius:12px;
+    font-size:14px;
+    line-height:1.5;
+    display:none;
+  }
+  .route-result b{ color:var(--ink); }
+  .route-result.shown{ display:block; }
+  .route-result.covered{
+    background:color-mix(in srgb, var(--brass) 18%, transparent);
+    border:1px solid var(--brass);
+  }
+  .route-result.not-covered{
+    background:color-mix(in srgb, var(--tide) 14%, transparent);
+    border:1px solid var(--tide);
+  }
+  .step2-edit{
+    font-size:12.5px; margin-bottom:16px; display:inline-block;
+    text-decoration:underline; color:var(--ink-soft); background:none; border:none;
+    padding:0; cursor:pointer; font-family:inherit;
+  }
+  .step2-edit:hover{ color:var(--tide-strong); }
 
   /* ---------- FAQ ---------- */
   .faq-list{ display:grid; gap:0; }
@@ -486,6 +669,9 @@
     color:var(--ink);
   }
   .trust-item p{ margin-top:3px; font-size:13.5px; color:var(--ink-soft); }
+  .trust-item ul{ margin:6px 0 0; padding:0; list-style:none; display:grid; gap:3px; }
+  .trust-item ul li{ font-size:13px; color:var(--ink-soft); }
+  .trust-item ul li b{ color:var(--brass); }
 
   /* ---------- Segmented toggle (lead type) ---------- */
   .segmented{
@@ -512,6 +698,30 @@
     color:var(--paper-soft);
   }
   .segmented input:focus-visible + label{ outline:var(--focus); outline-offset:2px; }
+
+  /* ---------- Scenario picker (form Step 1 qualification) ---------- */
+  .scenario-grid{
+    display:grid; gap:10px;
+    grid-template-columns:1fr;
+    margin:0 0 20px;
+  }
+  @media (min-width:520px){ .scenario-grid{ grid-template-columns:1fr 1fr; } }
+  .scenario-grid > div{ position:relative; }
+  .scenario-grid input{ position:absolute; opacity:0; pointer-events:none; }
+  .scenario-card{
+    display:block; cursor:pointer;
+    border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px;
+    background:var(--paper);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .scenario-card b{ display:block; font-size:14px; color:var(--ink); }
+  .scenario-card span{ display:block; margin-top:3px; font-size:12.5px; color:var(--ink-soft); }
+  .scenario-grid input:checked + .scenario-card{
+    border-color:var(--tide-strong);
+    background:color-mix(in srgb, var(--tide) 10%, var(--paper));
+  }
+  .scenario-grid input:focus-visible + .scenario-card{ outline:var(--focus); outline-offset:2px; }
 
   /* ---------- Form CTA row ---------- */
   .form-actions{
@@ -570,9 +780,40 @@
   }
   .footer-word{ font-family:"Fraunces", serif; font-size:17px; font-weight:600; }
   .footer-tag{ font-size:13.5px; color:var(--ink-soft); margin-top:4px; }
-  .footer-links{ display:flex; gap:22px; list-style:none; margin:0; padding:0; }
+  .footer-links{ display:flex; flex-wrap:wrap; gap:22px; list-style:none; margin:0; padding:0; align-items:center; }
   .footer-links a{ font-size:13.5px; color:var(--ink-soft); text-decoration:none; }
   .footer-links a:hover{ color:var(--tide-strong); }
+  .footer-links .link-btn{
+    font-family:inherit; font-size:13.5px; color:var(--ink-soft);
+    background:none; border:none; padding:0; cursor:pointer; text-decoration:none;
+  }
+  .footer-links .link-btn:hover{ color:var(--tide-strong); }
+
+  /* ---------- Cookie preferences (footer) ---------- */
+  .cookie-panel{
+    margin-top:22px; padding:20px 22px;
+    border:1px solid var(--line); border-radius:16px;
+    background:var(--paper-soft);
+    max-width:620px;
+  }
+  .cookie-panel[hidden]{ display:none; }
+  .cookie-panel h3{ font-size:16px; }
+  .cookie-panel > p{ margin-top:8px; font-size:13.5px; color:var(--ink-soft); }
+  .cookie-row{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 0; border-top:1px solid var(--line);
+  }
+  .cookie-row:first-of-type{ border-top:none; margin-top:14px; }
+  .cookie-row input{ margin-top:3px; flex:none; width:16px; height:16px; }
+  .cookie-row .row-copy b{ font-size:13.5px; color:var(--ink); display:block; }
+  .cookie-row .row-copy span{ font-size:12.5px; color:var(--ink-soft); }
+  .cookie-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+  .cookie-fine{ margin-top:14px !important; font-size:12px !important; }
+  .cookie-status{
+    margin-top:10px; font-size:12.5px; color:var(--brass); font-weight:700;
+    display:none;
+  }
+  .cookie-status.shown{ display:block; }
 
   /* ---------- Quick-start card (hero) ---------- */
   .quick-start{
@@ -603,7 +844,7 @@
     letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:6px;
   }
   .qs-field input{
-    width:100%; font-family:"Nunito Sans", sans-serif; font-size:14.5px;
+    width:100%; font-family:"Nunito Sans", sans-serif; font-size:16px;
     padding:11px 14px; border:1px solid var(--line); border-radius:999px;
     background:var(--paper); color:var(--ink);
   }
@@ -620,11 +861,11 @@
       <span class="scribble" style="display:block;margin-top:-2px;">moving, made friendly</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#how">How it works</a></li>
-      <li><a href="#built-for">What's included</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#how" data-cta="micro" data-cta-location="nav">How it works</a></li>
+      <li><a href="#built-for" data-cta="micro" data-cta-location="nav">What's included</a></li>
+      <li><a href="#faq" data-cta="micro" data-cta-location="nav">FAQ</a></li>
     </ul>
-    <a class="btn btn-primary nav-cta" href="#plan">Book a consultation</a>
+    <a class="btn btn-primary nav-cta" href="#plan" data-cta="primary" data-cta-location="nav">Get my free relocation plan →</a>
   </nav>
 </header>
 
@@ -633,29 +874,43 @@
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow">Relocating to a new country? We've got you.</span>
-        <h1>Moving abroad, <i>without losing your mind.</i></h1>
-        <p>Mizu Move pairs you with a real person who plans your move and a network of vetted international movers — like having a friend who's already done this, on your side the whole way.</p>
+        <h1>Move abroad <i>without the headache.</i></h1>
+        <p>One relocation consultant, vetted international movers, and one plan from pickup to delivery.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#plan">Book a free consultation</a>
-          <a class="btn btn-ghost" href="#how">See how it works</a>
+          <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="hero">Get my free relocation plan →</a>
+          <a class="btn btn-ghost" href="#" id="hero-calendly-link" data-cta="secondary" data-cta-location="hero">Book a 20-min consultation</a>
         </div>
-        <p class="hero-note">FREE 20-MIN CALL · NO OBLIGATION · REPLY WITHIN 1 BUSINESS DAY</p>
+        <p class="hero-note">FREE · NO OBLIGATION · REPLY WITHIN 1 BUSINESS DAY</p>
+
+        <div class="whats-next">
+          <b>What happens next?</b>
+          <ol>
+            <li>Tell us about your move.</li>
+            <li>A Mizu consultant reviews your route and timeline.</li>
+            <li>We identify suitable moving options.</li>
+            <li>You receive clear next steps — then you decide.</li>
+          </ol>
+        </div>
+
+        <p class="hero-subnav"><a href="#how" data-cta="micro" data-cta-location="hero_subnav">See how it works ↓</a></p>
       </div>
 
       <div class="quick-start">
-        <div class="qs-badge">FREE<br>20-MIN<br>CHAT</div>
+        <div class="qs-badge">FREE<br>PLAN</div>
         <div class="quick-start-head">Where are you headed?</div>
-        <div class="qs-row">
-          <div class="qs-field">
-            <label for="qs-from">Moving from</label>
-            <input id="qs-from" type="text" placeholder="e.g. Berlin">
+        <form id="hero-route-form">
+          <div class="qs-row">
+            <div class="qs-field">
+              <label for="qs-from">Moving from</label>
+              <input id="qs-from" name="qs-from" type="text" placeholder="e.g. Berlin, Germany" autocomplete="off">
+            </div>
+            <div class="qs-field">
+              <label for="qs-to">Moving to</label>
+              <input id="qs-to" name="qs-to" type="text" placeholder="e.g. Amsterdam, Netherlands" autocomplete="off">
+            </div>
           </div>
-          <div class="qs-field">
-            <label for="qs-to">Moving to</label>
-            <input id="qs-to" type="text" placeholder="e.g. Amsterdam">
-          </div>
-        </div>
-        <a class="btn btn-primary qs-submit" href="#plan">Get matched, free →</a>
+          <button class="btn btn-primary qs-submit" type="submit" data-cta="primary" data-cta-location="hero_route_checker">Check my route →</button>
+        </form>
         <span class="scribble quick-start-foot">real reply within 1 business day</span>
       </div>
     </div>
@@ -666,8 +921,13 @@
       <div class="trust-item">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2 3 5v5c0 4.4 3 7.5 7 8.5 4-1 7-4.1 7-8.5V5l-7-3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10.2 9.2 12.5 13.2 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div>
-          <h3>Every mover is checked first</h3>
-          <p>Licensing, insurance, and track record verified before we ever match them with you.</p>
+          <h3>Every mover passes our checks</h3>
+          <ul>
+            <li><b>✓</b> Insurance verified</li>
+            <li><b>✓</b> Licensing checked</li>
+            <li><b>✓</b> Track record reviewed</li>
+            <li><b>✓</b> Fit for your specific route</li>
+          </ul>
         </div>
       </div>
       <div class="trust-item">
@@ -681,7 +941,7 @@
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 10a7.5 7.5 0 1 0 15 0 7.5 7.5 0 0 0-15 0Z" stroke="currentColor" stroke-width="1.5"/><path d="M10 5.5v5l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <div>
           <h3>We say no when we should</h3>
-          <p>Onboarding routes across Europe one at a time — if we don't cover yours yet, we'll tell you plainly.</p>
+          <p>Onboarding routes across Europe one at a time. If we don't have a suitable option for your move, we'll tell you — not stretch the truth to keep you on the phone.</p>
         </div>
       </div>
     </div>
@@ -698,16 +958,19 @@
           <span class="tag">Movers</span>
           <h3>Vetting a mover in a country you don't live in yet</h3>
           <p>Reviews are unreliable, quotes vary wildly, and there's no easy way to tell a serious international mover from a reseller of your job.</p>
+          <div class="solution"><b>Mizu Move:</b> we match you with movers who already passed our insurance, licensing, and track-record checks.</div>
         </div>
         <div class="problem-item">
           <span class="tag">Timing</span>
           <h3>Two calendars, one move date</h3>
           <p>Lease end dates, customs windows, and a mover's availability rarely line up on their own.</p>
+          <div class="solution"><b>Mizu Move:</b> one consultant coordinates the move so those dates get reconciled for you, not by you.</div>
         </div>
         <div class="problem-item">
           <span class="tag">Paperwork</span>
           <h3>Admin that differs by destination</h3>
           <p>Customs declarations, inventories, insurance — the requirements change country to country, and most of it isn't the mover's job to explain.</p>
+          <div class="solution"><b>Mizu Move:</b> your consultant walks you through what your specific route actually requires.</div>
         </div>
       </div>
     </div>
@@ -723,21 +986,21 @@
         <div class="step">
           <span class="step-num">01</span>
           <div>
-            <h3>Tell us your move</h3>
-            <p>Origin, destination, rough date, and what's coming with you. Two minutes, no account needed.</p>
+            <h3>Tell us your move <span class="step-time">2 minutes</span></h3>
+            <p>Origin, destination, rough date, and what's coming with you. No account needed.</p>
           </div>
         </div>
         <div class="step">
           <span class="step-num">02</span>
           <div>
-            <h3>Get a plan and your matches</h3>
+            <h3>Get your plan &amp; matches <span class="step-time">Within 1 business day</span></h3>
             <p>A relocation consultant reviews your route and puts together a plan, matched with vetted international movers who actually cover it.</p>
           </div>
         </div>
         <div class="step">
           <span class="step-num">03</span>
           <div>
-            <h3>Move, guided end to end</h3>
+            <h3>Move, guided end to end <span class="step-time">Until delivery</span></h3>
             <p>One point of contact on both sides of the border — through pickup, transit, customs, and delivery.</p>
           </div>
         </div>
@@ -751,6 +1014,20 @@
         <span class="eyebrow">Built for</span>
         <h2>Whichever part of relocating is slowing you down.</h2>
       </div>
+
+      <div class="segment-intro">
+        <div class="card">
+          <span class="glyph">INDIVIDUALS</span>
+          <h3>Moving abroad yourself?</h3>
+          <p>Get a personal relocation plan and vetted mover matches for your route.</p>
+        </div>
+        <div class="card">
+          <span class="glyph">TEAMS</span>
+          <h3>Relocating employees?</h3>
+          <p>Get coordinated relocation support for multiple employees, with one summary for HR.</p>
+        </div>
+      </div>
+
       <div class="cards">
         <div class="card">
           <span class="glyph">01 · MOVERS</span>
@@ -776,69 +1053,273 @@
     </div>
   </section>
 
+  <section id="mizu-vs-mover">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How this actually works</span>
+        <h2>So, who actually moves my things?</h2>
+        <p>Mizu helps you plan your move and find suitable moving partners. The physical transportation is handled by the moving company you choose.</p>
+      </div>
+      <div class="free-grid">
+        <div>
+          <span class="eyebrow">Mizu helps with</span>
+          <ul class="check-list" style="margin-top:14px;">
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Understanding your move</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Route assessment</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Finding suitable movers</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Comparing options</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Coordinating the process</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Helping you understand what's next</li>
+          </ul>
+        </div>
+        <div>
+          <span class="eyebrow">Your moving partner handles</span>
+          <ul class="check-list" style="margin-top:14px;">
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Packing</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Transportation</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Customs / operational logistics, where applicable</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Delivery</li>
+            <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Unpacking, depending on the service you choose</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="free">
+    <div class="wrap free-grid">
+      <div>
+        <span class="eyebrow">No cost to start</span>
+        <h2>Before you commit to anything, we'll help you understand</h2>
+        <ul class="check-list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Whether we can support your route</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> What kind of moving service you may need</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> What options are available</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> What to expect from the process</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> What information you'll need to make a decision</li>
+        </ul>
+        <div class="free-note"><b>No booking fee. No obligation. You decide what happens next.</b> The plan, the matching, and the quote comparison cost nothing either way — you only pay if and when you book a move with a matched mover.</div>
+      </div>
+      <div>
+        <span class="eyebrow">What happens after</span>
+        <h2>Then you decide, with real numbers</h2>
+        <p style="margin-top:14px;color:var(--ink-soft);font-size:16px;">Once you have your plan and matches, there's no pressure loop — you compare real quotes and choose whether to move forward.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Moves we've helped with</span>
+        <h2>People move. We help make the in-between easier.</h2>
+      </div>
+      <div class="reviews-slider">
+        <div class="reviews-track" id="reviews-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Customer reviews">
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 1 of 7">
+            <span class="objection">"I don't know where to start"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">I had no idea where to start with an international move, and honestly, I was overwhelmed by all the options. Mizu helped me understand what I actually needed, found suitable movers for my route, and gave me one person to speak to throughout the process. It made the whole move feel much more manageable.</p>
+            <div class="attribution">
+              <div class="who">Anna</div>
+              <div class="meta">Berlin → Lisbon</div>
+              <span class="profile">Solo relocation</span>
+            </div>
+          </div>
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 2 of 7">
+            <span class="objection">"Too much to coordinate alone"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">We were moving countries together for the first time, and there were so many little things to figure out. Having someone who could look at the whole move with us, rather than just arrange the transport, made a huge difference. We always knew what was happening next.</p>
+            <div class="attribution">
+              <div class="who">Sophie &amp; Daniel</div>
+              <div class="meta">London → Amsterdam</div>
+              <span class="profile">Couple relocation</span>
+            </div>
+          </div>
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 3 of 7">
+            <span class="objection">"I'm moving with children"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">Moving with two children already felt like a big enough project. The last thing we wanted was to spend weeks calling moving companies and comparing quotes. Mizu helped us narrow everything down and kept the process simple. Having one person we could rely on made the move much less stressful.</p>
+            <div class="attribution">
+              <div class="who">Emma</div>
+              <div class="meta">Paris → Madrid</div>
+              <span class="profile">Family of four</span>
+            </div>
+          </div>
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 4 of 7">
+            <span class="objection">"I don't have time for this"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">I had a very tight timeline and didn't have the time to research international movers myself. Mizu quickly understood my situation, helped me figure out the options and connected me with the right people. I especially appreciated how responsive and straightforward the communication was.</p>
+            <div class="attribution">
+              <div class="who">James</div>
+              <div class="meta">London → Berlin</div>
+              <span class="profile">Time-sensitive relocation</span>
+            </div>
+          </div>
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 5 of 7">
+            <span class="objection">"I don't know what service I need"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">After living abroad for several years, I thought moving back would be simple. It wasn't. There were more things to organise than I expected, and I didn't know which type of moving service I actually needed. Mizu helped me make sense of it all and took a lot of the uncertainty out of the process.</p>
+            <div class="attribution">
+              <div class="who">Laura</div>
+              <div class="meta">Barcelona → Bucharest</div>
+              <span class="profile">Returning home</span>
+            </div>
+          </div>
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 6 of 7">
+            <span class="objection">"Worried something will go wrong"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">Our biggest concern was that something would go wrong somewhere between pickup and delivery. Mizu gave us a clear plan and helped us understand the different options before we committed to anything. It was reassuring to know there was an actual person on our side.</p>
+            <div class="attribution">
+              <div class="who">Michael &amp; Claire</div>
+              <div class="meta">Amsterdam → Dubai</div>
+              <span class="profile">Long-distance relocation</span>
+            </div>
+          </div>
+          <div class="review-card" aria-roledescription="slide" aria-label="Review 7 of 7">
+            <span class="objection">"My move doesn't fit the usual mold"</span>
+            <span class="quote-mark">&ldquo;</span>
+            <p class="quote">I wasn't moving an entire household, just my personal belongings, and most moving companies made the process feel unnecessarily complicated. Mizu understood exactly what I needed and helped me find an option that made sense for the size of my move. Simple, personal and easy.</p>
+            <div class="attribution">
+              <div class="who">Sofia</div>
+              <div class="meta">Milan → Copenhagen</div>
+              <span class="profile">Personal belongings</span>
+            </div>
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-arrow" type="button" id="reviews-prev" aria-label="Previous review">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="slider-dots" id="reviews-dots" role="tablist" aria-label="Choose a review"></div>
+          <button class="slider-arrow" type="button" id="reviews-next" aria-label="Next review">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3 11 8l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="plan" id="plan">
     <div class="wrap plan-grid">
       <div class="plan-copy">
         <span class="eyebrow">Start here</span>
-        <h2>Book your free relocation consultation</h2>
+        <h2>Get your free relocation plan</h2>
         <p>Tell us your route and timeline, or grab a slot on a consultant's calendar directly. Either way, a relocation consultant follows up with a plan and, where we already cover your route, matched movers.</p>
         <ul class="plan-points">
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Free to request, no obligation to book</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> A person replies, not an autoresponder</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 6.5 12 13 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> We'll tell you plainly if we don't cover your route yet</li>
         </ul>
+
+        <div class="risk-reversal">
+          <div class="tags">
+            <span>Free to get started</span>
+            <span>No obligation</span>
+            <span>Reply within 1 business day</span>
+          </div>
+          <ol>
+            <li>We check your route</li>
+            <li>A consultant reviews your move</li>
+            <li>You receive your options</li>
+            <li>You decide whether to proceed</li>
+          </ol>
+        </div>
       </div>
 
-      <form id="plan-form" action="#" method="post">
-        <div class="form-success">Thanks — your details are in. A relocation consultant will reply within one business day.</div>
+      <form id="plan-form" novalidate>
+        <div class="form-success" role="status" aria-live="polite">Thanks — we've received your move details. A relocation consultant will review your route and get back to you within 1 business day.</div>
         <div class="form-fields">
-          <fieldset class="segmented" role="radiogroup" aria-label="Who is this relocation for">
-            <input type="radio" id="lead-self" name="lead_type" value="Myself" checked>
-            <label for="lead-self">I'm relocating myself</label>
-            <input type="radio" id="lead-team" name="lead_type" value="My team">
-            <label for="lead-team">I'm relocating my team</label>
-          </fieldset>
-          <div class="form-row two">
-            <div class="field">
-              <label for="name">Full name</label>
-              <input id="name" name="name" type="text" placeholder="Jane Kowalski" required>
+
+          <!-- STEP 1 — route check -->
+          <div class="form-step" id="step-1">
+            <span class="step-label">Step 1 of 2 — Your route</span>
+            <fieldset class="scenario-grid" role="radiogroup" aria-label="What kind of move are you planning?">
+              <div>
+                <input type="radio" id="scenario-solo" name="scenario" value="solo" data-label="I'm relocating myself" checked>
+                <label for="scenario-solo" class="scenario-card"><b>I'm moving on my own</b><span>Moving your belongings to a new country.</span></label>
+              </div>
+              <div>
+                <input type="radio" id="scenario-family" name="scenario" value="partner_family" data-label="I'm moving with my partner or family">
+                <label for="scenario-family" class="scenario-card"><b>I'm moving with my partner or family</b><span>More people, more belongings, more things to coordinate.</span></label>
+              </div>
+              <div>
+                <input type="radio" id="scenario-small" name="scenario" value="small_move" data-label="I'm moving with very little">
+                <label for="scenario-small" class="scenario-card"><b>I'm moving with very little</b><span>Personal belongings, boxes or a smaller shipment.</span></label>
+              </div>
+              <div>
+                <input type="radio" id="scenario-work" name="scenario" value="work" data-label="I'm relocating for work">
+                <label for="scenario-work" class="scenario-card"><b>I'm relocating for work</b><span>Moving as part of a new job or international assignment.</span></label>
+              </div>
+            </fieldset>
+            <div class="form-row two">
+              <div class="field" id="field-from">
+                <label for="from">Moving from</label>
+                <input id="from" name="moving_from" type="text" placeholder="City, country" required>
+                <span class="field-error">Tell us where you're moving from.</span>
+              </div>
+              <div class="field" id="field-to">
+                <label for="to">Moving to</label>
+                <input id="to" name="moving_to" type="text" placeholder="City, country" required>
+                <span class="field-error">Tell us where you're moving to.</span>
+              </div>
             </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="jane@email.com" required>
+            <div class="route-result" id="route-result" aria-live="polite"></div>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="button" id="check-route-btn" data-cta="primary" data-cta-location="plan_step1">Check my route →</button>
             </div>
           </div>
-          <div class="form-row two">
-            <div class="field">
-              <label for="from">Moving from</label>
-              <input id="from" name="moving_from" type="text" placeholder="City, country" required>
+
+          <!-- STEP 2 — contact details -->
+          <div class="form-step" id="step-2" hidden>
+            <span class="step-label">Step 2 of 2 — Your details</span>
+            <button type="button" class="step2-edit" id="step2-edit-route">← edit route</button>
+            <div class="form-row two">
+              <div class="field" id="field-name">
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" placeholder="Jane Kowalski" required>
+                <span class="field-error">Let us know your name.</span>
+              </div>
+              <div class="field" id="field-email">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="jane@email.com" required>
+                <span class="field-error">Enter a valid email address.</span>
+              </div>
             </div>
             <div class="field">
-              <label for="to">Moving to</label>
-              <input id="to" name="moving_to" type="text" placeholder="City, country" required>
+              <label for="timeline">Approximate move date</label>
+              <select id="timeline" name="timeline">
+                <option value="">Select a range</option>
+                <option>Within 1 month</option>
+                <option>1–3 months</option>
+                <option>3–6 months</option>
+                <option>Just researching</option>
+              </select>
             </div>
-          </div>
-          <div class="field">
-            <label for="timeline">Approximate move date</label>
-            <select id="timeline" name="timeline">
-              <option value="">Select a range</option>
-              <option>Within 1 month</option>
-              <option>1–3 months</option>
-              <option>3–6 months</option>
-              <option>Just researching</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="notes">Anything else worth knowing (optional)</label>
-            <textarea id="notes" name="notes" placeholder="Household size, a car to ship, a tight deadline — whatever's relevant."></textarea>
+            <div class="field">
+              <label for="notes">Anything else worth knowing (optional)</label>
+              <textarea id="notes" name="notes" placeholder="Household size, a car to ship, a tight deadline — whatever's relevant."></textarea>
+            </div>
+
+            <!-- hidden fields carried through to the CRM once a backend is wired up -->
+            <input type="hidden" name="utm_source" id="utm_source">
+            <input type="hidden" name="utm_medium" id="utm_medium">
+            <input type="hidden" name="utm_campaign" id="utm_campaign">
+            <input type="hidden" name="utm_content" id="utm_content">
+            <input type="hidden" name="utm_term" id="utm_term">
+            <input type="hidden" name="landing_page" id="landing_page">
+            <input type="hidden" name="submitted_at" id="submitted_at">
+
+            <div class="form-actions">
+              <button class="btn btn-primary form-submit" type="submit" id="submit-btn" data-cta="primary" data-cta-location="plan_step2">
+                <span class="spinner"></span><span class="btn-label-idle">Get my free relocation plan →</span><span class="btn-label-loading">Sending…</span>
+              </button>
+            </div>
+            <a class="btn btn-ghost" href="#" id="book-call-link" style="width:100%;margin-top:12px;" data-cta="secondary" data-cta-location="plan_form">Or book a 20-min consultation →</a>
           </div>
         </div>
-        <div class="form-actions">
-          <button class="btn btn-primary" type="submit">Book my free consultation</button>
-          <a class="btn btn-ghost" href="#" id="book-call-link">Or grab a time on the calendar →</a>
-        </div>
-        <p class="calendar-note" id="calendar-note">Calendar booking isn't wired up yet in this draft — swap the <code>#book-call-link</code> href for a real Calendly / Cal.com link, and this button becomes an instant-booking option instead of a form submission.</p>
-        <p class="form-fine">By submitting, you're agreeing to be contacted about this move. We don't sell your details or share them beyond matching you with a mover you approve. Prefer email? <a href="mailto:hello@mizumove.example">hello@mizumove.example</a></p>
+        <p class="calendar-note" id="calendar-note">Calendly isn't connected yet in this draft — set <code>CALENDLY_URL</code> in the script below to your real scheduling link and this note disappears automatically.</p>
+        <p class="form-fine">By submitting, you're agreeing to be contacted about this move — see our <a href="/privacy-policy.html">Privacy Policy</a>. We don't sell your details or share them beyond matching you with a mover you approve. Prefer email? <a href="mailto:hello@mizumove.com" data-cta="email" data-cta-location="plan_form">hello@mizumove.com</a></p>
       </form>
     </div>
   </section>
@@ -889,7 +1370,7 @@
           <h3>Still deciding?</h3>
           <p>A free 20-minute call is usually faster than reading another FAQ.</p>
         </div>
-        <a class="btn btn-primary" href="#plan">Book a free consultation</a>
+        <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="faq_cta">Get my free relocation plan →</a>
       </div>
     </div>
   </section>
@@ -902,44 +1383,637 @@
       <div class="footer-tag">Let your move flow.</div>
     </div>
     <ul class="footer-links">
-      <li><a href="mailto:hello@mizumove.example">hello@mizumove.example</a></li>
-      <li><a href="#how">How it works</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="mailto:hello@mizumove.com" data-cta="email" data-cta-location="footer">hello@mizumove.com</a></li>
+      <li><a href="#how" data-cta="micro" data-cta-location="footer">How it works</a></li>
+      <li><a href="#faq" data-cta="micro" data-cta-location="footer">FAQ</a></li>
+      <li><a href="/cookies-policy.html">Cookie Policy</a></li>
+      <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+      <li><button type="button" class="link-btn" id="cookie-settings-toggle" aria-expanded="false" aria-controls="cookie-panel">Cookie settings</button></li>
     </ul>
+  </div>
+
+  <div class="wrap">
+    <div class="cookie-panel" id="cookie-panel" hidden>
+      <h3>Cookie preferences</h3>
+      <p>We keep this simple: nothing beyond what's strictly necessary loads until you say yes. See the full <a href="/cookies-policy.html">Cookie Policy</a> for what each one does.</p>
+
+      <div class="cookie-row">
+        <input type="checkbox" checked disabled id="consent-necessary" aria-describedby="consent-necessary-desc">
+        <div class="row-copy">
+          <b>Strictly necessary</b>
+          <span id="consent-necessary-desc">Always on. Nothing is currently set in this category — the site doesn't need a cookie to function.</span>
+        </div>
+      </div>
+      <div class="cookie-row">
+        <input type="checkbox" id="consent-analytics" aria-describedby="consent-analytics-desc">
+        <div class="row-copy">
+          <b>Analytics</b>
+          <span id="consent-analytics-desc">Google Analytics (GA4) — helps us understand aggregate site usage. Off by default.</span>
+        </div>
+      </div>
+      <div class="cookie-row">
+        <input type="checkbox" id="consent-functionality" aria-describedby="consent-functionality-desc">
+        <div class="row-copy">
+          <b>Functionality</b>
+          <span id="consent-functionality-desc">Powers the Calendly booking widget and remembers which campaign brought you here, so a form submission is credited correctly. Off by default.</span>
+        </div>
+      </div>
+
+      <div class="cookie-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="cookie-accept-all">Accept all</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="cookie-necessary-only">Necessary only</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="cookie-save">Save preferences</button>
+      </div>
+      <p class="cookie-fine">Changing these may reload the page so the change takes effect immediately.</p>
+      <p class="cookie-status" id="cookie-status" role="status" aria-live="polite">Saved.</p>
+    </div>
   </div>
 </footer>
 
 <div class="sticky-bar" role="complementary" aria-label="Quick contact">
-  <a class="btn btn-primary" href="#plan">Book a free consultation</a>
-  <a class="mail" href="mailto:hello@mizumove.example">or email us</a>
+  <a class="btn btn-primary" href="#plan" data-cta="primary" data-cta-location="sticky_bar">Get my free relocation plan →</a>
+  <a class="mail" href="mailto:hello@mizumove.com" data-cta="email" data-cta-location="sticky_bar">or email us</a>
 </div>
 
 <script>
-  (function(){
-    var form = document.getElementById('plan-form');
-    if(!form) return;
-    form.addEventListener('submit', function(e){
-      // Placeholder handler for the preview only.
-      // In production this form should POST to a real endpoint
-      // (Formspree, Netlify Forms, etc.) — see deployment notes.
+(function(){
+  "use strict";
+
+  /* =====================================================================
+     CONFIG — the two lines a developer needs to touch before launch.
+     ===================================================================== */
+  // TODO: replace with the real Calendly scheduling link (or Cal.com — swap
+  // the openCalendly() body below for Cal.com's embed API if you use that
+  // instead). Until this no longer contains "REPLACE_ME", the on-page
+  // #calendar-note stays visible as a build reminder.
+  var CALENDLY_URL = "https://calendly.com/REPLACE_ME/consultation";
+
+  // TODO: point this at your real form backend once one exists
+  // (Formspree, a Vercel serverless function, a CRM webhook — anything
+  // that accepts a POST). Until then, submission is simulated locally so
+  // the funnel can be tested end to end.
+  var FORM_ENDPOINT = null;
+
+  // TODO: replace with the real GA4 Measurement ID once a property exists.
+  var GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+
+  /* =====================================================================
+     Consent manager — nothing non-essential loads until the visitor
+     opts in via the "Cookie settings" panel in the footer. No floating
+     banner: this is a deliberate, lighter-touch pattern — see
+     cookies-policy.html for what each category covers.
+     ===================================================================== */
+  var CONSENT_KEY = 'mizu_consent';
+
+  function getConsent(){
+    try{
+      var raw = localStorage.getItem(CONSENT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    }catch(e){ return null; }
+  }
+
+  function saveConsent(consent){
+    try{ localStorage.setItem(CONSENT_KEY, JSON.stringify(consent)); }catch(e){}
+  }
+
+  // Storing the consent choice itself is exempt from consent requirements
+  // (it's what makes the mechanism work at all) — everything gated below
+  // this line is the actual non-essential stuff.
+  var consent = getConsent() || { analytics: false, functionality: false };
+
+  var gaLoaded = false;
+  function loadGA4(){
+    if (gaLoaded || GA_MEASUREMENT_ID.indexOf('XXXXXXXXXX') > -1) return;
+    gaLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', GA_MEASUREMENT_ID);
+  }
+
+  var calendlyAssetsRequested = false;
+  function loadCalendlyAssets(){
+    if (calendlyAssetsRequested) return;
+    calendlyAssetsRequested = true;
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(link);
+    var script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+
+  function applyConsent(){
+    if (consent.analytics) loadGA4();
+    if (consent.functionality) loadCalendlyAssets();
+  }
+  applyConsent();
+
+  /* Footer cookie-preferences panel wiring. */
+  var cookiePanel = document.getElementById('cookie-panel');
+  var cookieToggle = document.getElementById('cookie-settings-toggle');
+  var analyticsCheckbox = document.getElementById('consent-analytics');
+  var functionalityCheckbox = document.getElementById('consent-functionality');
+
+  function syncCheckboxes(){
+    if (analyticsCheckbox) analyticsCheckbox.checked = !!consent.analytics;
+    if (functionalityCheckbox) functionalityCheckbox.checked = !!consent.functionality;
+  }
+  syncCheckboxes();
+
+  function openCookiePanel(){
+    if (!cookiePanel) return;
+    cookiePanel.hidden = false;
+    if (cookieToggle) cookieToggle.setAttribute('aria-expanded', 'true');
+    syncCheckboxes();
+  }
+  function closeCookiePanel(){
+    if (!cookiePanel) return;
+    cookiePanel.hidden = true;
+    if (cookieToggle) cookieToggle.setAttribute('aria-expanded', 'false');
+  }
+  if (cookieToggle) {
+    cookieToggle.addEventListener('click', function(){
+      if (cookiePanel.hidden) openCookiePanel(); else closeCookiePanel();
+    });
+  }
+
+  function commitConsent(next){
+    // Downgrading a category that was already loaded (GA4 especially)
+    // can't be cleanly un-injected, so reload the page to guarantee it
+    // actually stops rather than pretending it did.
+    var needsReload = (consent.analytics && !next.analytics) || (consent.functionality && !next.functionality);
+    consent = next;
+    saveConsent(consent);
+    if (needsReload) {
+      window.location.reload();
+      return;
+    }
+    applyConsent();
+    syncCheckboxes();
+    var status = document.getElementById('cookie-status');
+    if (status) {
+      status.textContent = 'Saved.';
+      status.classList.add('shown');
+    }
+  }
+
+  var acceptAllBtn = document.getElementById('cookie-accept-all');
+  var necessaryOnlyBtn = document.getElementById('cookie-necessary-only');
+  var saveBtn = document.getElementById('cookie-save');
+  if (acceptAllBtn) acceptAllBtn.addEventListener('click', function(){ commitConsent({ analytics: true, functionality: true }); });
+  if (necessaryOnlyBtn) necessaryOnlyBtn.addEventListener('click', function(){ commitConsent({ analytics: false, functionality: false }); });
+  if (saveBtn) saveBtn.addEventListener('click', function(){
+    commitConsent({
+      analytics: !!(analyticsCheckbox && analyticsCheckbox.checked),
+      functionality: !!(functionalityCheckbox && functionalityCheckbox.checked)
+    });
+  });
+
+  /* =====================================================================
+     Analytics helper — wraps gtag so every call site stays one line.
+     No-ops entirely (not even queued) unless analytics consent is on,
+     so nothing pre-consent ever reaches Google once GA4 loads.
+     ===================================================================== */
+  function trackEvent(name, params){
+    if (!consent.analytics) return;
+    params = params || {};
+    if (typeof gtag === "function") {
+      gtag('event', name, params);
+    }
+  }
+
+  /* =====================================================================
+     UTM capture + persistence. Reading the current URL's UTM params into
+     memory for THIS pageview needs no consent — nothing is stored.
+     Persisting them in localStorage so they survive to a later visit is
+     the "Functionality" cookie category, so that part only happens once
+     consent.functionality is true; without it, campaign attribution only
+     works if the visitor converts on the same visit they arrived on.
+     ===================================================================== */
+  var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  var STORAGE_KEY = 'mizu_utms';
+
+  function captureUtms(){
+    var params = new URLSearchParams(window.location.search);
+    var hasAny = UTM_KEYS.some(function(k){ return params.has(k); });
+    var stored = {};
+    if (consent.functionality) {
+      try{
+        stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {};
+      }catch(e){ stored = {}; }
+    }
+
+    if (hasAny) {
+      UTM_KEYS.forEach(function(k){
+        if (params.has(k)) stored[k] = params.get(k);
+      });
+      stored.landing_page = window.location.pathname;
+      if (consent.functionality) {
+        try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(stored)); }catch(e){}
+      }
+    } else if (!stored.landing_page) {
+      stored.landing_page = window.location.pathname;
+    }
+    return stored;
+  }
+
+  var utms = captureUtms();
+
+  function fillHiddenUtmFields(){
+    UTM_KEYS.forEach(function(k){
+      var el = document.getElementById(k);
+      if (el) el.value = utms[k] || '';
+    });
+    var lp = document.getElementById('landing_page');
+    if (lp) lp.value = utms.landing_page || window.location.pathname;
+  }
+  fillHiddenUtmFields();
+
+  function utmParams(extra){
+    var base = {
+      utm_source: utms.utm_source || '(none)',
+      utm_medium: utms.utm_medium || '(none)',
+      utm_campaign: utms.utm_campaign || '(none)',
+      utm_content: utms.utm_content || '(none)',
+      landing_page: utms.landing_page || window.location.pathname
+    };
+    for (var k in extra) base[k] = extra[k];
+    return base;
+  }
+
+  /* =====================================================================
+     cta_click — every element carrying data-cta fires one on click,
+     with its location and visible label as parameters.
+     ===================================================================== */
+  document.querySelectorAll('[data-cta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      trackEvent('cta_click', utmParams({
+        cta_type: el.getAttribute('data-cta'),
+        cta_location: el.getAttribute('data-cta-location') || '',
+        cta_text: (el.textContent || '').trim()
+      }));
+    });
+  });
+
+  /* email_click — fires separately from cta_click for any mailto link. */
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function(el){
+    el.addEventListener('click', function(){
+      trackEvent('email_click', utmParams({ cta_location: el.getAttribute('data-cta-location') || '' }));
+    });
+  });
+
+  /* faq_open — fires only when a <details> is opened, not closed. */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    item.addEventListener('toggle', function(){
+      if (item.open) {
+        var summary = item.querySelector('summary');
+        trackEvent('faq_open', utmParams({
+          faq_question: summary ? summary.textContent.replace('+','').trim() : ''
+        }));
+      }
+    });
+  });
+
+  /* =====================================================================
+     Calendly — real popup widget once CALENDLY_URL is set for real.
+     ===================================================================== */
+  function calendlyConfigured(){
+    return CALENDLY_URL.indexOf('REPLACE_ME') === -1;
+  }
+
+  function openCalendly(source){
+    trackEvent('calendar_click', utmParams({ cta_location: source }));
+
+    if (!consent.functionality) {
+      // Calendly is a "Functionality" cookie — don't load or open it
+      // without consent. Send the visitor to the footer panel to grant
+      // it instead of silently failing.
+      openCookiePanel();
+      var status = document.getElementById('cookie-status');
+      if (status) {
+        status.textContent = 'Turn on "Functionality" cookies below to open the booking calendar.';
+        status.classList.add('shown');
+      }
+      document.getElementById('cookie-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    loadCalendlyAssets();
+
+    if (!calendlyConfigured()) {
+      var note = document.getElementById('calendar-note');
+      if (note) note.classList.add('shown');
+      return;
+    }
+
+    function tryOpen(attempt){
+      if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+        window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      } else if (attempt < 10) {
+        // Widget script may still be loading (just requested above) —
+        // retry briefly before giving up.
+        setTimeout(function(){ tryOpen(attempt + 1); }, 200);
+      } else {
+        window.open(CALENDLY_URL, '_blank', 'noopener');
+      }
+    }
+    tryOpen(0);
+  }
+
+  var calendlyTriggers = [
+    { id: 'hero-calendly-link', source: 'hero' },
+    { id: 'book-call-link', source: 'plan_form' }
+  ];
+  calendlyTriggers.forEach(function(t){
+    var el = document.getElementById(t.id);
+    if (!el) return;
+    el.addEventListener('click', function(e){
       e.preventDefault();
-      form.classList.add('sent');
-      form.scrollIntoView({behavior:'smooth', block:'center'});
+      openCalendly(t.source);
+    });
+  });
+
+  if (!calendlyConfigured()) {
+    var noteEl = document.getElementById('calendar-note');
+    if (noteEl) noteEl.classList.add('shown');
+  }
+
+  // Calendly posts a message to the window when a booking is actually
+  // confirmed — this is the real "calendar_booking" conversion, distinct
+  // from just clicking to open the widget.
+  window.addEventListener('message', function(e){
+    if (e.data && e.data.event && e.data.event === 'calendly.event_scheduled') {
+      trackEvent('calendar_booking', utmParams({}));
+    }
+  });
+
+  /* =====================================================================
+     Route coverage check — honest by default. No routes are marked
+     "covered" until a real one is added below; every check currently
+     falls into the not-covered branch, which matches the site's actual
+     coverage today (see llms.txt).
+     ===================================================================== */
+  // TODO: add lowercase substrings (city or country names) here once a
+  // route genuinely has live mover coverage, e.g. 'munich'. Matched
+  // against the "Moving to" field.
+  var COVERED_DESTINATIONS = [];
+
+  function isRouteCovered(destination){
+    var d = (destination || '').toLowerCase();
+    return COVERED_DESTINATIONS.some(function(place){ return d.indexOf(place) > -1; });
+  }
+
+  /* =====================================================================
+     Hero mini route-checker — feeds straight into the main form below
+     instead of duplicating the coverage logic in two places.
+     ===================================================================== */
+  var heroForm = document.getElementById('hero-route-form');
+  if (heroForm) {
+    heroForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var from = document.getElementById('qs-from').value.trim();
+      var to = document.getElementById('qs-to').value.trim();
+      var mainFrom = document.getElementById('from');
+      var mainTo = document.getElementById('to');
+      if (mainFrom) mainFrom.value = from;
+      if (mainTo) mainTo.value = to;
+      trackEvent('cta_click', utmParams({ cta_type: 'primary', cta_location: 'hero_route_checker', cta_text: 'Check my route' }));
+      document.getElementById('plan').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var checkBtn = document.getElementById('check-route-btn');
+      if (checkBtn) setTimeout(function(){ checkBtn.click(); }, 350);
+    });
+  }
+
+  /* =====================================================================
+     Reviews slider — dependency-free scroll-snap carousel. Dots are
+     generated from however many .review-card elements exist, so adding
+     or removing a review in the markup above needs no JS changes.
+     ===================================================================== */
+  (function(){
+    var track = document.getElementById('reviews-track');
+    if (!track) return;
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.review-card'));
+    var dotsWrap = document.getElementById('reviews-dots');
+    var prevBtn = document.getElementById('reviews-prev');
+    var nextBtn = document.getElementById('reviews-next');
+
+    cards.forEach(function(card, i){
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'slider-dot';
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', 'Go to review ' + (i + 1) + ' of ' + cards.length);
+      dot.addEventListener('click', function(){
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      dotsWrap.appendChild(dot);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.slider-dot'));
+
+    function activeIndex(){
+      var trackRect = track.getBoundingClientRect();
+      var center = trackRect.left + trackRect.width / 2;
+      var closest = 0, closestDist = Infinity;
+      cards.forEach(function(card, i){
+        var r = card.getBoundingClientRect();
+        var dist = Math.abs((r.left + r.width / 2) - center);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      return closest;
+    }
+
+    function updateDots(){
+      var idx = activeIndex();
+      dots.forEach(function(d, i){ d.setAttribute('aria-current', i === idx ? 'true' : 'false'); });
+    }
+
+    function debounce(fn, wait){
+      var t;
+      return function(){
+        var ctx = this, args = arguments;
+        clearTimeout(t);
+        t = setTimeout(function(){ fn.apply(ctx, args); }, wait);
+      };
+    }
+
+    track.addEventListener('scroll', debounce(updateDots, 80));
+    updateDots();
+
+    function scrollByCard(dir){
+      var card = cards[0];
+      if (!card) return;
+      var style = getComputedStyle(track);
+      var gap = parseFloat(style.columnGap || style.gap || '0') || 0;
+      track.scrollBy({ left: dir * (card.getBoundingClientRect().width + gap), behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', function(){ scrollByCard(-1); });
+    nextBtn.addEventListener('click', function(){ scrollByCard(1); });
+    track.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight') { scrollByCard(1); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { scrollByCard(-1); e.preventDefault(); }
     });
   })();
 
-  (function(){
-    // Placeholder "book a call" link: reveals a note instead of navigating
-    // to a dead link. Replace with a real Calendly/Cal.com href to make
-    // this an instant-booking button.
-    var link = document.getElementById('book-call-link');
-    var note = document.getElementById('calendar-note');
-    if(!link || !note) return;
-    link.addEventListener('click', function(e){
-      e.preventDefault();
-      note.classList.add('shown');
+  /* =====================================================================
+     Main 2-step lead form.
+     ===================================================================== */
+  var form = document.getElementById('plan-form');
+  if (form) {
+    var started = false;
+    form.addEventListener('focusin', function(){
+      if (!started) {
+        started = true;
+        trackEvent('form_start', utmParams({ form_type: 'relocation_plan' }));
+      }
     });
-  })();
+
+    function setError(fieldId, show){
+      var field = document.getElementById(fieldId);
+      if (!field) return;
+      field.classList.toggle('has-error', !!show);
+    }
+
+    // ---- Step 1: route check ----
+    var step1 = document.getElementById('step-1');
+    var step2 = document.getElementById('step-2');
+    var routeResult = document.getElementById('route-result');
+    var checkBtn = document.getElementById('check-route-btn');
+
+    checkBtn.addEventListener('click', function(){
+      var from = document.getElementById('from');
+      var to = document.getElementById('to');
+      var ok = true;
+      if (!from.value.trim()) { setError('field-from', true); ok = false; } else setError('field-from', false);
+      if (!to.value.trim()) { setError('field-to', true); ok = false; } else setError('field-to', false);
+      if (!ok) return;
+
+      var scenarioInput = form.querySelector('input[name="scenario"]:checked');
+      var covered = isRouteCovered(to.value);
+
+      routeResult.innerHTML = covered
+        ? '<b>Good news — we can help with this route.</b><br>We’ll review your move and come back with suitable options from our vetted network.'
+        : '<b>We don’t currently have a confirmed mover for this route.</b><br>But we’re constantly expanding our network. Leave your details and we’ll check what options may be available.';
+      routeResult.classList.remove('covered', 'not-covered');
+      routeResult.classList.add('shown', covered ? 'covered' : 'not-covered');
+
+      // The step-2 CTA reflects what was just promised in the result
+      // above, rather than a fixed label regardless of coverage.
+      var idleLabel = document.querySelector('#submit-btn .btn-label-idle');
+      if (idleLabel) idleLabel.textContent = covered ? 'Get my free relocation plan →' : 'Ask Mizu to check →';
+
+      trackEvent('form_step_1_complete', utmParams({
+        form_type: 'relocation_plan',
+        scenario: scenarioInput ? scenarioInput.value : '',
+        relocation_type: scenarioInput ? scenarioInput.getAttribute('data-label') : '',
+        origin: from.value.trim(),
+        destination: to.value.trim(),
+        route_covered: covered
+      }));
+
+      step1.hidden = true;
+      step2.hidden = false;
+      document.getElementById('name').focus();
+    });
+
+    document.getElementById('step2-edit-route').addEventListener('click', function(){
+      step2.hidden = true;
+      step1.hidden = false;
+    });
+
+    // ---- Step 2: contact details + submit ----
+    var isSubmitting = false;
+
+    function validEmail(v){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (isSubmitting) return; // duplicate-submit guard
+
+      var name = document.getElementById('name');
+      var email = document.getElementById('email');
+      var ok = true;
+      if (!name.value.trim()) { setError('field-name', true); ok = false; } else setError('field-name', false);
+      if (!validEmail(email.value.trim())) { setError('field-email', true); ok = false; } else setError('field-email', false);
+      if (!ok) return;
+
+      document.getElementById('submitted_at').value = new Date().toISOString();
+
+      var scenarioChecked = form.querySelector('input[name="scenario"]:checked');
+      var payload = {
+        scenario: scenarioChecked ? scenarioChecked.value : '',
+        lead_type: scenarioChecked ? scenarioChecked.getAttribute('data-label') : '',
+        name: name.value.trim(),
+        email: email.value.trim(),
+        moving_from: document.getElementById('from').value.trim(),
+        moving_to: document.getElementById('to').value.trim(),
+        timeline: document.getElementById('timeline').value,
+        notes: document.getElementById('notes').value.trim(),
+        utm_source: utms.utm_source || '',
+        utm_medium: utms.utm_medium || '',
+        utm_campaign: utms.utm_campaign || '',
+        utm_content: utms.utm_content || '',
+        utm_term: utms.utm_term || '',
+        landing_page: utms.landing_page || window.location.pathname,
+        submitted_at: document.getElementById('submitted_at').value
+      };
+
+      isSubmitting = true;
+      var submitBtn = document.getElementById('submit-btn');
+      submitBtn.classList.add('is-loading');
+      submitBtn.disabled = true;
+
+      function onSuccess(){
+        trackEvent('form_submit', utmParams({
+          form_type: 'relocation_plan',
+          scenario: payload.scenario,
+          relocation_type: payload.lead_type,
+          origin: payload.moving_from,
+          destination: payload.moving_to,
+          move_date: payload.timeline
+        }));
+        form.classList.add('sent');
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        isSubmitting = false;
+        submitBtn.classList.remove('is-loading');
+        submitBtn.disabled = false;
+      }
+
+      function onFailure(){
+        isSubmitting = false;
+        submitBtn.classList.remove('is-loading');
+        submitBtn.disabled = false;
+        routeResult.textContent = "Something went wrong sending this — please try again, or email hello@mizumove.com directly.";
+        routeResult.classList.remove('covered');
+        routeResult.classList.add('shown', 'not-covered');
+      }
+
+      if (FORM_ENDPOINT) {
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(function(res){
+          if (res.ok) onSuccess(); else onFailure();
+        }).catch(onFailure);
+      } else {
+        // No backend wired up yet — simulate the round trip so the full
+        // funnel (loading state → success state → form_submit event) can
+        // be tested end to end before FORM_ENDPOINT exists.
+        setTimeout(onSuccess, 600);
+      }
+    });
+  }
+})();
 </script>
 
 </body>
